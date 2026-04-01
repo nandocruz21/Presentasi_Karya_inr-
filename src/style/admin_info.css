@@ -1,0 +1,448 @@
+/* 1. RESET & FONT */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: #475569;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* 2. SIDEBAR NAVIGATION */
+.sidebar {
+  width: 260px;
+  background-color: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  height: 100vh;
+  position: fixed; /* Sidebar tetap di tempat saat di-scroll */
+  left: 0;
+  
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-family: Amiri, serif;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.sidebar-menu {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.sidebar-menu p {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  margin-left: 10px;
+  letter-spacing: 1px;
+}
+
+.ini-nav {
+  display: flex;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  text-decoration: none;
+  color: #64748b;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.ini-nav:hover {
+  background-color: #f1f5f9;
+  color: #10b981;
+}
+
+.ini-nav.active {
+  background-color: #10b981;
+  color: white;
+}
+
+.ini-nav i {
+  width: 25px;
+  font-size: 1.2rem;
+  margin-right: 12px;
+}
+
+.ini-nav span {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* --- Sidebar Footer --- */
+.sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #10b981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
+.profile-info h4 {
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.btn-logout {
+  margin-left: auto;
+  color: #ef4444;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* 3. MAIN CONTENT AREA */
+.main-content {
+  margin-left: 260px;
+  padding: 40px;
+  width: calc(100% - 260px);
+}
+
+.header-content {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.header-content h1 {
+  font-family: "Amiri", serif;
+  font-size: 40px;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.header-content p {
+  color: #64748b;
+}
+
+/* 4. CARD & LAYOUT */
+.dashboard {
+  width: 100%;
+}
+
+.baris-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  align-items: flex-start;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  border: 1px solid #e2e8f0;
+}
+
+.card-kiri {
+  flex: 1;
+  min-width: 300px;
+}
+
+.kolom-kanan {
+  flex: 2;
+  min-width: 450px;
+  display: flex;
+  flex-direction: column;
+}
+
+.kepala-kotak {
+  margin-bottom: 25px;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 15px;
+}
+
+.judul-kotak {
+  font-family: "Amiri", serif;
+  font-size: 22px;
+  color: #0f172a;
+}
+
+/* 5. FORM PENGUMUMAN */
+.grup-form {
+  margin-bottom: 20px;
+}
+
+.grup-form label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.grup-form input,
+.grup-form textarea {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #0f172a;
+  outline: none;
+  transition: 0.3s;
+  resize: vertical;
+}
+
+.grup-form input:focus,
+.grup-form textarea:focus {
+  border-color: #10b981;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+
+.tombol-tambah {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  padding: 15px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
+  transition: 0.3s;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.tombol-tambah:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
+
+/* 6. KARTU INFORMASI (PRATINJAU) */
+.daftar-kartu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.kartu-info {
+  background: #ffffff;
+  border: 3px solid #d1fae5;
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  position: relative;
+  transition: 0.3s ease;
+}
+
+.kartu-info:hover {
+  border-color: #10b981;
+  box-shadow: 0 15px 30px rgba(16, 185, 129, 0.1);
+  transform: translateY(-5px);
+}
+
+.ikon-kartu {
+  width: 60px;
+  height: 60px;
+  background: #10b981;
+  color: #ffffff;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  margin: 0 auto 20px auto;
+  box-shadow: 0 8px 15px rgba(16, 185, 129, 0.2);
+}
+
+.teks-kategori {
+  font-size: 22px;
+  font-weight: 800;
+  color: #059669;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.teks-judul {
+  font-family: "Amiri", serif;
+  font-size: 32px;
+  color: #0f172a;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.teks-deskripsi {
+  font-size: 15px;
+  color: #64748b;
+}
+
+.tanggal-posting {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  background: #f1f5f9;
+  padding: 5px 12px;
+  border-radius: 50px;
+}
+
+.aksi-pojok {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+}
+
+.btn-aksi {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  background: #f8fafc;
+}
+
+.btn-edit {
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.btn-edit:hover {
+  background: #059669;
+  color: #ffffff;
+}
+
+.btn-hapus {
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.btn-hapus:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+/* 7. RESPONSIVE MEDIA QUERIES */
+@media (max-width: 992px) {
+  .card-kiri,
+  .kolom-kanan {
+    min-width: 100%;
+  }
+}
+
+/* =========================================================
+   8. STYLE TAMBAHAN UNTUK RESPONSIVE DI HP (BARU)
+   ========================================================= */
+
+/* Tombol Hamburger di Main Content (Sembunyi di Desktop) */
+.btn-hamburger {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #0f172a;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+/* Tombol Close "X" di Sidebar (Sembunyi di Desktop) */
+.btn-close-sidebar {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #94a3b8;
+  cursor: pointer;
+  margin-left: auto;
+  transition: 0.3s;
+}
+
+.btn-close-sidebar:hover {
+  color: #ef4444;
+}
+
+/* Media Query untuk Layar HP (Maks. 768px) */
+@media (max-width: 768px) {
+  /* Atur Sidebar Sembunyi ke Kiri */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+  }
+  
+  /* Class "show" untuk memunculkan sidebar */
+  .sidebar.show {
+    transform: translateX(0);
+  }
+  
+  /* Main Content tanpa jarak kiri */
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  /* Munculkan tombol-tombol khusus HP */
+  .btn-hamburger {
+    display: block; 
+  }
+
+  .btn-close-sidebar {
+    display: block; 
+  }
+  
+  .sidebar-header {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Atur agar judul responsif mengecil sedikit di HP */
+  .header-content h1 {
+    font-size: 30px;
+  }
+}

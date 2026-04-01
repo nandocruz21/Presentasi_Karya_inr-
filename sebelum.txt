@@ -1,0 +1,340 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Poppins, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #456187;
+  line-height: 1.6;
+}
+header {
+  top: 0;
+  z-index: 1000;
+  position: fixed;
+  width: 100%;
+  padding: 20px 50px;
+  background: transparent;
+  align-items: center;
+  box-sizing: border-box;
+  transition:
+    background-color 0.4s ease-in-out,
+    box-shadow 0.4s ease-in-out,
+    padding 0.4s ease-in-out;
+}
+header.scrolled {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.95
+  ); /* Putih pekat tapi masih tembus sedikit (95%) */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Efek bayangan di bawah navbar */
+  padding: 10px 50px; /* Navbar sedikit mengecil agar terlihat lebih elegan saat discroll */
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  width: 100%;
+}
+nav a {
+  position: relative;
+  padding: 9px 15px;
+  text-decoration: none;
+  color: #555;
+}
+ul li a:hover {
+  border-bottom: 2px solid black;
+  color: #456187;
+}
+
+nav .logo {
+  font-weight: bold;
+  font-size: 24px;
+  color: #2c3e50;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+.hero {
+  text-align: center;
+  padding: 20px;
+  background-image: url(/gambar/3.png);
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: -1;
+  box-sizing: border-box;
+}
+
+.tes1 h1 {
+  font-family: Amiri;
+  font-size: 40px;
+}
+/* Tombol */
+.cta {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.btn {
+  padding: 50px 30px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.btn-primary {
+  background: #34495e;
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  text-decoration: none;
+}
+.btn-outline {
+  border: 2px solid #ddd;
+  color: #ffffff;
+  /* margin-left: 20px; */
+  background-color: #667eea;
+  padding: 20px;
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+/* SECTION KEDUA */
+.kedua {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 60px 20px;
+  box-sizing: border-box;
+  background: #dee7f0;
+}
+
+.utama1 {
+  width: 100%;
+  max-width: 2200px;
+  margin: 0 auto;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; /* Kolom kiri lebih besar */
+  gap: 30px;
+  align-items: stretch;
+}
+
+/* Styling Semua Grid Item */
+.grid-item {
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  background-color: white;
+}
+
+.grid-item:hover {
+  transform: translateY(-20px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Item Utama (Kiri) */
+.utama {
+  grid-row: span 3; /* Memenuhi 3 baris */
+  color: white;
+}
+
+.utama .section-title {
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #456187;
+  font-family: Amiri;
+  font-size: 60px;
+  line-height: 90px;
+  display: block;
+}
+
+.utama .section-description {
+  font-size: 1.1rem; /* BESAR! */
+  line-height: 1.8;
+  color: rgba(0, 0, 0, 0.9);
+  margin-top: 20px;
+}
+
+.fa-solid {
+  color: #344256;
+  padding: 20px;
+  border: 2px solid #e0e5eb;
+  border-radius: 50%;
+  margin-right: 20px;
+  background-color: #e0e5eb;
+}
+/* Item Kecil (Kanan) */
+.grid-item-small {
+  background: white;
+  border-left: 5px solid #494c5a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.grid-item-small h3 {
+  font-family: Amiri;
+  font-size: 25px;
+  font-weight: 600;
+  color: #344256;
+  margin-bottom: 10px;
+}
+
+.grid-item-small p {
+  font-size: 1.1rem; /* BESAR! */
+  color: #666;
+  line-height: 1.6;
+}
+
+/* section 3 */
+.ketiga {
+  min-height: 90vh;
+  width: 100%;
+}
+.Utama2 h1 {
+  text-align: center;
+  font-family: Amiri;
+  margin-top: 100px;
+  margin-bottom: 30px;
+  font-size: 50px;
+}
+.section-title1 p {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 100px;
+}
+/* box */
+.bungkus {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+.box {
+  border: 2px solid black;
+  padding: 30px;
+  width: 400px;
+  border-radius: 10px;
+  height: 350px;
+}
+.dalam1 {
+  margin-bottom: 40px;
+}
+.dalam2 {
+  margin-bottom: 25px;
+}
+.dalam3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+}
+.dalam3 a {
+  text-decoration: none;
+  font-size: 18px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fa-angle-right {
+  background-color: white;
+  border: none;
+  padding: 0 0 0 10px;
+  margin: 0;
+}
+.dalam1 p {
+  /* font-family: Amiri; */
+  font-size: 16px;
+  font-weight: 500;
+  color: #344256;
+}
+.dalam1 h3 {
+  font-family: Amiri;
+  font-weight: bold;
+  font-size: 25px;
+}
+/* section 4 */
+.keempat {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #dee7f0;
+  padding: 35px;
+}
+.Utama3 h1 {
+  text-align: center;
+  font-family: Amiri;
+  margin-top: 90px;
+  margin-bottom: 30px;
+  font-size: 50px;
+}
+.section-title2 p {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 100px;
+}
+.bungkus1 {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+.box1 {
+  border: 2px solid black;
+  padding: 30px;
+  width: 350px;
+  border-radius: 10px;
+  height: 350px;
+  background-color: white;
+}
+.box1 img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+  border: 2px solid black;
+  }
+.boxsatu h3 {
+  text-align: center;
+  margin-top: 20px;
+  font-family: Amiri;
+  font-size: 20px;
+  color: black;
+}
+.boxsatu{
+  text-align: center;
+  margin-bottom: 20px;
+}
+.boxdua {
+  text-align: center;
+}

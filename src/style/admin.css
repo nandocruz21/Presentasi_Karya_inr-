@@ -1,0 +1,333 @@
+/* Reset & Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f8fafc;
+  display: flex;
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  color: #475569;
+  overflow-x: hidden; /* Mencegah scroll ke kanan yang tidak disengaja */
+}
+
+/* Sidebar Navigation */
+.sidebar {
+  width: 260px;
+  background-color: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  height: 100vh;
+  position: fixed; /* Sidebar tetap di tempat saat di-scroll */
+  left: 0;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-family: Amiri, serif;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.sidebar-menu {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.sidebar-menu p {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  margin-left: 10px;
+  letter-spacing: 1px;
+}
+
+.ini-nav {
+  display: flex;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  text-decoration: none;
+  color: #64748b;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.ini-nav:hover {
+  background-color: #f1f5f9;
+  color: #10b981;
+}
+
+.ini-nav.active {
+  background-color: #10b981;
+  color: white;
+}
+
+.ini-nav i {
+  width: 25px;
+  font-size: 1.2rem;
+  margin-right: 12px;
+}
+
+.ini-nav span {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #10b981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
+.profile-info h4 {
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.btn-logout {
+  margin-left: auto;
+  color: #ef4444;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* Main Content (BAGIAN PERBAIKAN) */
+.main-content {
+  margin-left: 260px; 
+  flex-grow: 1; /* Biarkan dia mengambil sisa ruang yang ada secara otomatis */
+  min-height: 100vh;
+  width: calc(100% - 260px); /* Alternatif lebih aman daripada 100vw */
+}
+
+.header-content {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.header-content h1 {
+  font-size: 40px;
+  color: #1e293b;
+  margin-bottom: 10px;
+  font-family: Amiri;
+  margin-top: 40px;
+
+}
+
+.header-content p {
+  color: #64748b;
+  font-size: 16px;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 25px;
+  padding: 0 30px 30px 30px;
+}
+
+/* Card Styling */
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.hero-card {
+  background-color: #1e293b;
+  color: white;
+  border: none;
+}
+
+.hero-card h2 {
+  margin-bottom: 1rem;
+}
+
+.hero-card p {
+  color: #94a3b8;
+  margin-bottom: 2rem;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: white;
+  color: #1e293b;
+  transform: translateY(-5px);
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-icon {
+  font-size: 2rem;
+  color: #10b981;
+  background: #f0fdf4;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.stat-value {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.stat-label {
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.activity-item {
+  display: flex;
+  padding: 15px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.activity-date {
+  min-width: 180px;
+  font-weight: 700;
+  color: #10b981;
+  font-size: 0.85rem;
+}
+
+.activity-text {
+  color: #475569;
+}
+
+/* Tampilan Tombol Hamburger */
+.btn-hamburger {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #0f172a;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.btn-close-sidebar {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #94a3b8;
+  cursor: pointer;
+  margin-left: auto; /* Mendorong tombol ke ujung kanan */
+  transition: 0.3s;
+}
+
+.btn-close-sidebar:hover {
+  color: #ef4444;
+}
+
+/* Responsif untuk Layar HP */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+  }
+  
+  .sidebar.show {
+    transform: translateX(0);
+  }
+    /* Atur agar judul responsif mengecil sedikit di HP */
+  .header-content h1 {
+    font-size: 30px;
+  margin-top: 0;
+  }
+  
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .btn-hamburger {
+    display: block; 
+  }  
+  .dashboard {
+    grid-template-columns: 1fr; /* Ubah menjadi 1 kolom ke bawah */
+    padding: 0 10px 30px 10px; /* Kurangi padding agar tidak terlalu mepet layar */
+  }
+
+  .activity-item {
+    flex-direction: column; /* Biar tanggal dan teks riwayat turun ke bawah di HP */
+    gap: 5px;
+  }
+
+  .activity-date {
+    min-width: auto;
+  }
+  
+  .btn-close-sidebar {
+    display: block; 
+  }
+  
+  .sidebar-header {
+    width: 100%;
+    justify-content: space-between; /* Memberi jarak otomatis antara logo dan tombol X */
+  }
+}

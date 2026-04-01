@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MSANTRI - TPQ Miftahul Jannah</title>
+    <!-- Font Awesome untuk Ikon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts: Poppins & Amiri -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =========================================================
+         TEMA ROYAL EMERALD PREMIUM (LANDING PAGE) - BALANCED
+         ========================================================= */
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Poppins", Helvetica, sans-serif;
+        color: #475569;
+        line-height: 1.6;
+        background-color: #ffffff;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+
+      /* ================= HEADER & NAVIGASI ================= */
+      header {
+        top: 0;
+        z-index: 1000;
+        position: fixed;
+        width: 100%;
+        padding: 20px 50px;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        transition: all 0.4s ease-in-out;
+      }
+      header.scrolled {
+        background-color: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 10px 30px rgba(5, 150, 105, 0.08);
+        padding: 15px 50px;
+      }
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+      /* Logo diubah ke warna Hitam Arang */
+      nav .logo {
+        font-weight: 700;
+        font-size: 26px;
+        color: #0f172a;
+        letter-spacing: 1px;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      nav a {
+        position: relative;
+        padding: 8px 15px;
+        text-decoration: none;
+        color: #64748b;
+        font-weight: 500;
+        transition: 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      /* Hover navigasi ke Hitam Arang */
+      ul li a:not(.btn-nav):hover {
+        color: #0f172a;
+      }
+      ul li a:not(.btn-nav)::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 50%;
+        background-color: #10b981;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+      ul li a:not(.btn-nav):hover::after {
+        width: 80%;
+      }
+      .btn-nav {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white !important;
+        border-radius: 50px;
+        padding: 10px 25px;
+        font-weight: 600;
+        box-shadow: 0 5px 15px rgba(5, 150, 105, 0.2);
+        margin-left: 10px;
+      }
+      .btn-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3);
+      }
+
+      /* ================= HERO SECTION ================= */
+      .hero {
+        text-align: center;
+        padding: 20px;
+        background-image:
+          linear-gradient(
+            135deg,
+            rgba(236, 253, 245, 0.85),
+            rgba(248, 250, 249, 0.98)
+          ),
+          url("https://www.transparenttextures.com/patterns/arabesque.png");
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+      }
+      .hero-subtitle {
+        font-family: "Amiri", serif;
+        font-weight: 400;
+        font-size: 32px;
+        color: #059669;
+        margin-bottom: 10px;
+      }
+      /* Judul Hero diubah ke Hitam Arang */
+      .hero h1 {
+        font-family: "Amiri", serif;
+        font-size: 60px;
+        line-height: 1.2;
+        color: #0f172a;
+        margin: 15px 0;
+      }
+      .hero h1 span {
+        color: #10b981;
+      }
+      .hero p {
+        font-size: 18px;
+        color: #475569;
+        margin-bottom: 30px;
+      }
+
+      .cta {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        padding: 18px 40px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        box-shadow: 0 10px 25px rgba(5, 150, 105, 0.3);
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(5, 150, 105, 0.4);
+        background: linear-gradient(135deg, #059669, #064e3b);
+      }
+      .btn-outline {
+        border: 2px solid #10b981;
+        color: #059669;
+        background-color: transparent;
+        padding: 18px 40px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      .btn-outline:hover {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 10px 25px rgba(5, 150, 105, 0.25);
+        transform: translateY(-3px);
+      }
+
+      /* ================= SECTION KEDUA ================= */
+      .kedua {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 80px 50px;
+        box-sizing: border-box;
+        background-color: #f8faf9;
+        background-image:
+          radial-gradient(
+            at 0% 0%,
+            rgba(16, 185, 129, 0.05) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 100% 100%,
+            rgba(6, 78, 59, 0.04) 0px,
+            transparent 50%
+          );
+      }
+      .utama1 {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .container {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 30px;
+        align-items: stretch;
+      }
+      .grid-item {
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        transition: all 0.4s ease;
+        background-color: #ffffff;
+        border: 1px solid rgba(209, 250, 229, 0.6);
+      }
+      .grid-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(5, 150, 105, 0.08);
+        border-color: #10b981;
+      }
+      .utama {
+        grid-row: span 3;
+      }
+      /* Judul Section diubah ke Hitam Arang */
+      .utama .section-title {
+        font-family: "Amiri", serif;
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: #0f172a;
+        font-size: 55px;
+        line-height: 1.2;
+      }
+      .utama .section-description {
+        font-size: 16px;
+        line-height: 1.8;
+        color: #475569;
+        margin-top: 20px;
+      }
+      .fa-solid {
+        color: white;
+        padding: 15px;
+        border-radius: 50%;
+        margin-right: 20px;
+        background: linear-gradient(135deg, #10b981, #059669);
+        box-shadow: 0 5px 15px rgba(5, 150, 105, 0.3);
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .grid-item-small {
+        border-left: 4px solid #10b981;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      /* Subjudul diubah ke Abu-abu Gelap */
+      .grid-item-small h3 {
+        font-family: "Amiri", serif;
+        font-size: 24px;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+      .grid-item-small p {
+        font-size: 15px;
+        color: #64748b;
+        line-height: 1.6;
+      }
+
+      /* ================= SECTION INFORMASI PENGUMUMAN ================= */
+      .informasi {
+        padding: 100px 50px;
+        background-color: #ffffff;
+        background-image:
+          radial-gradient(
+            at 0% 50%,
+            rgba(16, 185, 129, 0.03) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 100% 50%,
+            rgba(6, 78, 59, 0.03) 0px,
+            transparent 50%
+          );
+      }
+      .info-container {
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .info-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 25px;
+        background: #f8faf9;
+        border: 1px solid rgba(209, 250, 229, 0.8);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+        transition: all 0.3s ease;
+      }
+      .info-card:hover {
+        transform: translateX(10px);
+        border-color: #10b981;
+        box-shadow: 0 15px 30px rgba(5, 150, 105, 0.08);
+      }
+      .info-icon {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        flex-shrink: 0;
+        box-shadow: 0 5px 15px rgba(5, 150, 105, 0.2);
+      }
+      .info-icon i {
+        margin-right: 0;
+        background: none;
+        box-shadow: none;
+        padding: 0;
+        width: auto;
+        height: auto;
+      }
+      .info-content {
+        flex-grow: 1;
+      }
+      .info-date {
+        font-size: 13px;
+        color: #059669;
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        letter-spacing: 0.5px;
+      }
+      .info-date i {
+        background: none;
+        color: inherit;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        width: auto;
+        height: auto;
+      }
+      /* Judul Pengumuman diubah ke Hitam Arang */
+      .info-content h3 {
+        font-family: "Amiri", serif;
+        font-size: 26px;
+        color: #0f172a;
+        margin-bottom: 10px;
+      }
+      .info-content p {
+        font-size: 15px;
+        color: #475569;
+        line-height: 1.7;
+      }
+
+      /* ================= SECTION KETIGA (JADWAL PENGAJIAN) ================= */
+      .ketiga {
+        padding: 100px 50px;
+        background-color: #f8faf9;
+        background-image:
+          radial-gradient(
+            at 50% 0%,
+            rgba(16, 185, 129, 0.04) 0px,
+            transparent 60%
+          ),
+          radial-gradient(
+            at 50% 100%,
+            rgba(6, 78, 59, 0.03) 0px,
+            transparent 60%
+          );
+      }
+      /* Judul Jadwal diubah ke Hitam Arang */
+      .Utama2 h1,
+      .Utama3 h1 {
+        text-align: center;
+        font-family: "Amiri", serif;
+        font-size: 45px;
+        color: #0f172a;
+        margin-bottom: 15px;
+      }
+      .section-title1 p,
+      .section-title2 p {
+        text-align: center;
+        font-size: 18px;
+        color: #64748b;
+        margin-bottom: 60px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .bungkus {
+        display: flex;
+        gap: 25px;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      .box {
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(209, 250, 229, 0.8);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        padding: 40px 30px;
+        width: 300px;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.4s ease;
+        text-align: center;
+      }
+      .box:hover {
+        border-color: #10b981;
+        box-shadow: 0 20px 40px rgba(5, 150, 105, 0.1);
+        transform: translateY(-10px);
+      }
+
+      .dalam1 {
+        margin-bottom: 20px;
+      }
+      .dalam2 {
+        margin-bottom: 20px;
+        flex-grow: 1;
+      }
+      .dalam1 p {
+        font-size: 13px;
+        font-weight: 700;
+        color: #059669;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+      }
+      /* Hari diubah ke Abu-abu Gelap */
+      .dalam1 h3 {
+        font-family: "Amiri", serif;
+        font-weight: bold;
+        font-size: 28px;
+        color: #1e293b;
+      }
+
+      /* Jam diubah ke Hitam Arang */
+      .box span {
+        font-size: 18px;
+        font-weight: 700;
+        color: #0f172a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-top: auto;
+        padding-top: 20px;
+        border-top: 1px solid #ecfdf5;
+      }
+      .box span i {
+        color: #10b981;
+        background: transparent;
+        padding: 0;
+        box-shadow: none;
+        width: auto;
+        height: auto;
+        font-size: 20px;
+      }
+
+      .box.libur {
+        border-color: #fee2e2;
+        background-color: #fef2f2;
+      }
+      .box.libur:hover {
+        border-color: #f43f5e;
+        box-shadow: 0 20px 40px rgba(225, 29, 72, 0.08);
+      }
+      .box.libur .dalam1 p {
+        color: #e11d48;
+      }
+      .box.libur span i {
+        color: #e11d48;
+      }
+
+      /* ================= SECTION KEEMPAT (PENGAJAR) ================= */
+      .keempat {
+        min-height: 100vh;
+        width: 100%;
+        background-color: #ffffff;
+        padding: 100px 50px;
+        background-image:
+          radial-gradient(
+            at 100% 0%,
+            rgba(16, 185, 129, 0.05) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 0% 100%,
+            rgba(6, 78, 59, 0.04) 0px,
+            transparent 50%
+          );
+      }
+      .bungkus1 {
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      .box1 {
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(209, 250, 229, 0.8);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        padding: 40px 30px;
+        width: 300px;
+        border-radius: 20px;
+        transition: all 0.4s ease;
+        text-align: center;
+      }
+      .box1:hover {
+        border-color: #10b981;
+        box-shadow: 0 20px 40px rgba(5, 150, 105, 0.1);
+        transform: translateY(-10px);
+      }
+      .box1 img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        border: 4px solid #d1fae5;
+        padding: 4px;
+        background: white;
+      }
+      /* Nama Pengajar diubah ke Hitam Arang */
+      .boxsatu h3 {
+        font-family: "Amiri", serif;
+        font-size: 24px;
+        color: #0f172a;
+        font-weight: bold;
+      }
+      .boxsatu p {
+        color: #059669;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+      }
+      .boxdua {
+        font-size: 15px;
+        color: #475569;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- SECTION HERO -->
+    <section>
+      <header>
+        <nav>
+          <div class="logo">MSANTRI</div>
+          <ul>
+            <li><a href="contoh.html">Beranda</a></li>
+            <li><a href="#tentang">Tentang</a></li>
+            <li><a href="#informasi">Informasi</a></li>
+            <li><a href="#jadwal">Jadwal</a></li>
+            <li>
+              <a href="contoh_admin.html" class="btn-nav"
+                ><i class="fa-solid fa-lock" style="margin-right: 5px"></i>
+                Login Admin</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="hero">
+        <div class="hero-subtitle">Mari memperindah bacaan Al-Quran</div>
+        <h1>
+          Tempat Pengajian <br />
+          <span>Miftahul Jannah</span>
+        </h1>
+        <p>
+          Saat ini terdapat <strong>124</strong> Santri yang terdaftar pada
+          tempat pengajian ini
+        </p>
+
+        <div class="cta">
+          <a href="contoh_progres.html" class="btn-primary"
+            >Cek Progres Santri</a
+          >
+          <a href="#jadwal" class="btn-outline">Lihat Jadwal</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION KEDUA (Tentang Kami) -->
+    <section class="kedua" id="tentang">
+      <div class="utama1">
+        <div class="container">
+          <!-- Item Kiri (Besar) -->
+          <div class="grid-item utama">
+            <h1 class="section-title">
+              Membangun Generasi <br />
+              Cinta Al-Quran
+            </h1>
+            <p class="section-description">
+              Kami berdedikasi untuk menyediakan tempat pendidikan Al-Quran yang
+              nyaman dan bersahabat bagi anak-anak hingga dewasa. Tujuan utama
+              kami adalah menanamkan kecintaan membaca dan menghafal Al-Quran
+              sejak dini.
+            </p>
+            <p class="section-description">
+              Metode pembelajaran yang kami terapkan dirancang agar santri tidak
+              merasa terbebani, melainkan rindu untuk terus datang mengaji. Mari
+              bergabung menjadi bagian dari keluarga besar TPQ Miftahul Jannah.
+            </p>
+          </div>
+
+          <!-- Item Kanan Atas -->
+          <div class="grid-item grid-item-small">
+            <h3><i class="fa-solid fa-user-group"></i>Pengajar Sabar</h3>
+            <p>
+              Dibimbing langsung oleh ustadz dan ustadzah yang telaten dalam
+              mengajar ngaji.
+            </p>
+          </div>
+
+          <!-- Item Kanan Tengah -->
+          <div class="grid-item grid-item-small">
+            <h3><i class="fa-solid fa-book-open"></i>Metode Terstruktur</h3>
+            <p>
+              Menggunakan panduan jilid yang jelas sehingga progres anak mudah
+              dipantau.
+            </p>
+          </div>
+
+          <!-- Item Kanan Bawah -->
+          <div class="grid-item grid-item-small">
+            <h3><i class="fa-solid fa-star"></i>Fasilitas Nyaman</h3>
+            <p>
+              Ruang mengaji yang bersih, sirkulasi udara baik, dan lingkungan
+              yang kondusif.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION INFORMASI PENGUMUMAN -->
+    <section class="informasi" id="informasi">
+      <div class="Utama2">
+        <h1>Papan Informasi</h1>
+      </div>
+      <div class="section-title1">
+        <p>
+          Pengumuman dan informasi terbaru seputar kegiatan, libur, serta
+          pendaftaran di TPQ Miftahul Jannah.
+        </p>
+      </div>
+
+      <div class="info-container">
+        <!-- Info Card 1 -->
+        <div class="info-card">
+          <div class="info-icon"><i class="fa-solid fa-bullhorn"></i></div>
+          <div class="info-content">
+            <span class="info-date"
+              ><i class="fa-regular fa-calendar-days"></i> 24 Februari
+              2026</span
+            >
+            <h3>Pendaftaran Santri Baru Dibuka</h3>
+            <p>
+              Alhamdulillah, pendaftaran santri baru angkatan ke-5 telah resmi
+              dibuka. Kuota terbatas untuk 50 santri. Segera daftarkan ananda
+              tercinta dengan menghubungi Ibu Pengelola via WhatsApp atau datang
+              langsung ke TPQ.
+            </p>
+          </div>
+        </div>
+
+        <!-- Info Card 2 -->
+        <div class="info-card">
+          <div class="info-icon"><i class="fa-solid fa-bell"></i></div>
+          <div class="info-content">
+            <span class="info-date"
+              ><i class="fa-regular fa-calendar-days"></i> 10 Februari
+              2026</span
+            >
+            <h3>Jadwal Ujian Kenaikan Jilid</h3>
+            <p>
+              Ujian kenaikan jilid dan evaluasi hafalan akan dilaksanakan pada
+              pekan pertama bulan Maret. Dimohon Bapak/Ibu wali santri untuk
+              mendampingi ananda murojaah di rumah.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION KETIGA (JADWAL PENGAJIAN) -->
+    <section class="ketiga" id="jadwal">
+      <div class="Utama2">
+        <h1>Waktu & Jadwal Pengajian</h1>
+      </div>
+      <div class="section-title1">
+        <p>
+          Kegiatan belajar mengajar TPQ Miftahul Jannah dilaksanakan secara
+          rutin sesuai jadwal berikut.
+        </p>
+      </div>
+      <div class="bungkus">
+        <!-- Jadwal Hari Kerja -->
+        <div class="box">
+          <div class="dalam1">
+            <p>HARI KERJA</p>
+            <h3>Senin - Kamis</h3>
+          </div>
+          <div class="dalam2">
+            <p>Kegiatan pengajian rutin sore hari sepulang sekolah.</p>
+          </div>
+          <span><i class="fa-regular fa-clock"></i> 13.00 - 17.00 WIB</span>
+        </div>
+
+        <!-- Jadwal Libur -->
+        <div class="box libur">
+          <div class="dalam1">
+            <p>HARI ISTIRAHAT</p>
+            <h3>Jumat</h3>
+          </div>
+          <div class="dalam2">
+            <p>
+              Kegiatan pengajian TPQ diliburkan. Santri dianjurkan murojaah
+              mandiri.
+            </p>
+          </div>
+          <span><i class="fa-solid fa-door-closed"></i> L I B U R</span>
+        </div>
+
+        <!-- Jadwal Sabtu -->
+        <div class="box">
+          <div class="dalam1">
+            <p>AKHIR PEKAN</p>
+            <h3>Sabtu</h3>
+          </div>
+          <div class="dalam2">
+            <p>Kegiatan pengajian reguler berlanjut di waktu sore.</p>
+          </div>
+          <span><i class="fa-regular fa-clock"></i> 13.00 - 17.00 WIB</span>
+        </div>
+
+        <!-- Jadwal Minggu -->
+        <div class="box">
+          <div class="dalam1">
+            <p>AKHIR PEKAN</p>
+            <h3>Ahad (Minggu)</h3>
+          </div>
+          <div class="dalam2">
+            <p>
+              Pengajian sesi pagi hari agar santri bisa istirahat di siang
+              harinya.
+            </p>
+          </div>
+          <span><i class="fa-regular fa-clock"></i> 07.00 - 11.00 WIB</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION KEEMPAT (PENGAJAR) -->
+    <section class="keempat">
+      <div class="Utama3">
+        <h1>Pengajar Kami</h1>
+      </div>
+      <div class="section-title2">
+        <p>Santri akan dibimbing dengan sabar oleh ustadz dan ustadzah kami.</p>
+      </div>
+
+      <div class="bungkus1">
+        <!-- Pengajar 1 -->
+        <div class="box1">
+          <img
+            src="https://ui-avatars.com/api/?name=Ustadz+Abdullah&background=064E3B&color=fff&size=150"
+            alt="ustadz1"
+          />
+          <div class="boxsatu">
+            <h3>Ustadz Abdullah</h3>
+            <p>PENGAJAR TPQ</p>
+          </div>
+          <div class="boxdua">
+            Berpengalaman dalam mengajar tahsin dan tajwid dasar untuk santri.
+          </div>
+        </div>
+
+        <!-- Pengajar 2 -->
+        <div class="box1">
+          <img
+            src="https://ui-avatars.com/api/?name=Ustadzah+Fatimah&background=10B981&color=fff&size=150"
+            alt="ustadzah2"
+          />
+          <div class="boxsatu">
+            <h3>Ustadzah bajingan</h3>
+            <p>PENGAJAR TPQ</p>
+          </div>
+          <div class="boxdua">
+            Telaten membimbing santri usia dini dari jilid awal hingga Al-Quran.
+          </div>
+        </div>
+
+        <!-- Pengajar 3 -->
+        <div class="box1">
+          <img
+            src="https://ui-avatars.com/api/?name=Ustadz+Hidayat&background=059669&color=fff&size=150"
+            alt="ustadz3"
+          />
+          <div class="boxsatu">
+            <h3>Ustadz Hidayat</h3>
+            <p>PENGAJAR TPQ</p>
+          </div>
+          <div class="boxdua">
+            Membimbing santri lanjutan untuk kelancaran hafalan dan tilawah.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Script untuk Navbar Scroll -->
+    <script>
+      window.addEventListener("scroll", function () {
+        const header = document.querySelector("header");
+        if (window.scrollY > 50) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>

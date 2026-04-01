@@ -1,0 +1,378 @@
+/*1. RESET & FONT*/
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: #475569;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  display: flex;
+}
+
+/*2. SIDEBAR NAVIGATION*/
+.sidebar {
+  width: 260px;
+  background-color: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  height: 100vh;
+  position: fixed; /* Sidebar tetap di tempat saat di-scroll */
+  left: 0;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-family: Amiri, serif;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.sidebar-menu {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.sidebar-menu p {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  margin-left: 10px;
+  letter-spacing: 1px;
+}
+
+.ini-nav {
+  display: flex;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  text-decoration: none;
+  color: #64748b;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.ini-nav:hover {
+  background-color: #f1f5f9;
+  color: #10b981;
+}
+
+.ini-nav.active {
+  background-color: #10b981;
+  color: white;
+}
+
+.ini-nav i {
+  width: 25px;
+  font-size: 1.2rem;
+  margin-right: 12px;
+}
+
+.ini-nav span {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/*Sidebar Footer */
+.sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #10b981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
+.profile-info h4 {
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.btn-logout {
+  margin-left: auto;
+  color: #ef4444;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* MAIN CONTENT AREA*/
+.main-content {
+  margin-left: 260px;
+  padding: 40px;
+  width: calc(100% - 260px);
+}
+
+.header-content {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.header-content h1 {
+  font-family: "Amiri", serif;
+  font-size: 40px;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.header-content p {
+  color: #64748b;
+}
+
+/*CARD & LAYOUT*/
+.dashboard {
+  width: 100%;
+}
+
+.baris-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  align-items: stretch;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  border: 1px solid #e2e8f0;
+}
+
+.card-kiri,
+.card-kanan {
+  flex: 1 1;
+  min-width: 350px;
+}
+
+.kepala-kotak {
+  margin-bottom: 25px;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 15px;
+}
+
+.judul-kotak {
+  font-family: "Amiri", serif;
+  font-size: 22px;
+  color: #0f172a;
+}
+
+/*FORM JADWAL & LOKASI*/
+.grid-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.grup-form {
+  margin-bottom: 15px;
+}
+
+.grup-form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.grup-form input,
+.grup-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #0f172a;
+  outline: none;
+  transition: 0.3s;
+}
+
+.grup-form input:focus,
+.grup-form textarea:focus {
+  border-color: #10b981;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.grup-form textarea {
+  resize: vertical;
+}
+
+.teks-bantuan {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.teks-bantuan code {
+  background: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #ef4444;
+}
+
+/* KOTAK PREVIEW PETA */
+.kotak-peta {
+  width: 100%;
+  height: 250px;
+  border-radius: 16px;
+  border: 2px dashed #cbd5e1;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8fafc;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.kotak-peta:hover {
+  border-color: #10b981;
+}
+
+.kotak-peta iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* TOMBOL SIMPAN */
+.footer-form {
+  margin-top: 25px;
+}
+
+.tombol-simpan {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  padding: 12px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
+  transition: 0.3s;
+}
+
+.tombol-simpan:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
+
+.tombol-penuh {
+  width: 100%;
+}
+
+/* Tombol Hamburger di Main Content (Sembunyi di Desktop) */
+.btn-hamburger {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #0f172a;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+/* Tombol Close "X" di Sidebar (Sembunyi di Desktop) */
+.btn-close-sidebar {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #94a3b8;
+  cursor: pointer;
+  margin-left: auto;
+  transition: 0.3s;
+}
+
+.btn-close-sidebar:hover {
+  color: #ef4444;
+}
+
+/* RESPONSIVE MEDIA QUERIES */
+@media (max-width: 992px) {
+  .card-kiri,
+  .card-kanan {
+    min-width: 100%;
+  }
+}
+
+/* Media Query untuk Layar HP (Maks. 768px) */
+@media (max-width: 768px) {
+  /* Atur Sidebar Sembunyi ke Kiri */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+  }
+  
+  .sidebar.show {
+    transform: translateX(0);
+  }
+    .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 20px;
+  }
+    .btn-hamburger {
+    display: block; 
+  }
+
+  .btn-close-sidebar {
+    display: block; 
+  }
+  
+  .sidebar-header {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .header-content h1 {
+    font-size: 30px;
+  }
+
+  /* Jadikan form jadwal bertumpuk ke bawah (1 kolom) */
+  .grid-form {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Progres Santri - MSANTRI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+      /* =========================================================
+   CSS HALAMAN PROGRES SANTRI (MSANTRI)
+   Desain: Hijau Emerald | Layout: Flexbox
+   ========================================================= */
+
+/* 1. RESET DEFAULT */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #475569;
+  background-color: #f8faf9;
+  min-height: 100vh;
+}
+
+/* =========================================================
+   2. NAVIGASI MELAYANG (TOPBAR)
+   ========================================================= */
+.nav-utama { position: fixed; top: 25px; left: 0; width: 100%; display: flex; justify-content: center; z-index: 1000; }
+.nav-box { background-color: #ffffff; padding: 10px 15px; border-radius: 50px; display: flex; align-items: center; gap: 15px; box-shadow: 0 15px 35px rgba(5, 150, 105, 0.15); border: 1px solid rgba(16, 185, 129, 0.2); }
+.logo { font-family: 'Amiri', serif; font-weight: 700; font-size: 22px; color: #059669; padding: 0 15px; border-right: 2px solid rgba(16, 185, 129, 0.2); }
+.menu { display: flex; gap: 5px; }
+.nav-item { padding: 10px 20px; border-radius: 50px; color: #475569; text-decoration: none; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: 0.3s ease; }
+.nav-item:hover { color: #059669; background-color: rgba(16, 185, 129, 0.05); }
+.nav-item.aktif { background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; font-weight: 600; box-shadow: 0 5px 15px rgba(5, 150, 105, 0.3); }
+
+.profil { display: flex; align-items: center; gap: 10px; padding-left: 10px; border-left: 2px solid rgba(16, 185, 129, 0.2); }
+.profil img { width: 38px; height: 38px; border-radius: 50%; border: 2px solid #10b981; }
+.profil a { width: 38px; height: 38px; border-radius: 50%; background: rgba(239, 68, 68, 0.1); color: #ef4444; display: flex; justify-content: center; align-items: center; text-decoration: none; transition: 0.3s; }
+.profil a:hover { background: #ef4444; color: #ffffff; }
+
+/* =========================================================
+   3. AREA KONTEN UTAMA
+   ========================================================= */
+.konten { padding: 130px 40px 40px 40px; max-width: 1200px; margin: 0 auto; }
+.head-hal { text-align: center; margin-bottom: 35px; }
+.judul { font-family: 'Amiri', serif; font-size: 42px; color: #0f172a; }
+.sub-judul { font-size: 16px; color: #475569; margin-top: 5px; }
+
+/* =========================================================
+   4. LAYOUT KOTAK (FLEXBOX)
+   ========================================================= */
+.baris-flex { display: flex; flex-wrap: wrap; gap: 25px; }
+.kotak { background: #ffffff; border-radius: 24px; padding: 35px; border: 1px solid rgba(209, 250, 229, 0.8); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02); }
+.kotak-100 { flex: 1 1 100%; width: 100%; }
+
+/* =========================================================
+   5. FITUR PENCARIAN & TOMBOL
+   ========================================================= */
+.kepala-kotak { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; }
+.cari-grup { position: relative; width: 100%; max-width: 300px; }
+.cari-grup input { width: 100%; padding: 12px 20px 12px 45px; border-radius: 50px; border: 1px solid rgba(209, 250, 229, 0.8); outline: none; font-family: 'Poppins', sans-serif; font-size: 14px; background-color: #f8faf9; transition: 0.3s; }
+.cari-grup input:focus { border-color: #10b981; background-color: #ffffff; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); }
+.cari-grup i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #10b981; }
+.tombol-tambah { background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; padding: 12px 25px; border-radius: 50px; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer; box-shadow: 0 5px 15px rgba(5, 150, 105, 0.2); transition: 0.3s; }
+.tombol-tambah:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3); }
+
+/* =========================================================
+   6. TABEL PROGRES SANTRI
+   ========================================================= */
+.tabel-responsif { width: 100%; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 850px; }
+th { text-align: left; padding: 15px; color: #475569; font-size: 13px; font-weight: 600; text-transform: uppercase; border-bottom: 2px solid #f1f5f9; }
+td { padding: 20px 15px; border-bottom: 1px solid #f1f5f9; color: #475569; font-size: 14px; }
+tr:hover td { background-color: #f0fdf4; }
+.teks-tebal { color: #0f172a; font-weight: bold; }
+.catatan-teks { font-size: 13px; line-height: 1.6; }
+
+/* =========================================================
+   7. BADGE DROPDOWN INTERAKTIF (BARU)
+   ========================================================= */
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Membuat ikon panah kecil di dalam badge */
+.select-wrapper::after {
+  content: '\f0d7'; 
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  pointer-events: none; /* Area panah tetap bisa diklik */
+  color: inherit; /* Mengikuti warna teks di dalamnya */
+}
+
+/* Desain Select disamarkan menjadi Badge */
+.status-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 6px 28px 6px 15px; /* Ruang kanan untuk panah */
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* Efek saat diklik */
+.status-select:focus {
+  border-color: rgba(15, 23, 42, 0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Warna Badge Otomatis */
+.status-hadir { background: #d1fae5; color: #059669; }
+.status-izin { background: #fef3c7; color: #d97706; }
+.status-sakit { background: #e0f2fe; color: #0284c7; }
+.status-alpha { background: #fee2e2; color: #ef4444; }
+
+/* =========================================================
+   8. TOMBOL AKSI (EDIT & HAPUS)
+   ========================================================= */
+.grup-aksi { display: flex; gap: 10px; justify-content: center; }
+.aksi-edit, .aksi-hapus { width: 36px; height: 36px; border-radius: 10px; display: flex; justify-content: center; align-items: center; border: none; cursor: pointer; transition: 0.3s; background: #ffffff; }
+.aksi-edit { border: 1px solid rgba(16, 185, 129, 0.3); color: #059669; }
+.aksi-edit:hover { background: #059669; color: #ffffff; box-shadow: 0 5px 15px rgba(5, 150, 105, 0.2); }
+.aksi-hapus { border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; }
+.aksi-hapus:hover { background: #ef4444; color: #ffffff; box-shadow: 0 5px 15px rgba(239, 68, 68, 0.2); }
+
+/* =========================================================
+   9. MODAL TAMBAH SANTRI (POP-UP)
+   ========================================================= */
+.modal-overlay {
+  display: none; 
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(15, 23, 42, 0.6); 
+  backdrop-filter: blur(4px); 
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.modal-overlay.show { display: flex; opacity: 1; }
+
+.modal-content {
+  background: #ffffff;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  transform: translateY(-30px);
+  transition: transform 0.3s ease;
+}
+.modal-overlay.show .modal-content { transform: translateY(0); }
+
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #f1f5f9; }
+.modal-header h2 { font-family: 'Amiri', serif; font-size: 24px; color: #0f172a; }
+.close-btn { background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; transition: 0.3s; }
+.close-btn:hover { color: #ef4444; }
+
+.grup-form-modal { margin-bottom: 15px; text-align: left;}
+.grup-form-modal label { display: block; font-size: 13px; font-weight: 600; color: #0f172a; margin-bottom: 6px; }
+.grup-form-modal input, .grup-form-modal select, .grup-form-modal textarea {
+  width: 100%; padding: 12px 15px; border-radius: 12px; border: 1px solid #e2e8f0; font-family: 'Poppins', sans-serif; font-size: 14px; outline: none; transition: 0.3s; background: #f8faf9;
+}
+.grup-form-modal input:focus, .grup-form-modal select:focus, .grup-form-modal textarea:focus { border-color: #10b981; background: #ffffff; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
+.grup-form-modal textarea { resize: vertical; }
+
+.modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 25px; padding-top: 20px; border-top: 1px solid #f1f5f9; }
+.btn-batal { padding: 10px 20px; border-radius: 50px; border: 1px solid #cbd5e1; background: #ffffff; color: #64748b; font-weight: 600; cursor: pointer; transition: 0.3s; }
+.btn-batal:hover { background: #f1f5f9; color: #0f172a; }
+.btn-simpan { padding: 10px 20px; border-radius: 50px; border: none; background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; font-weight: 600; cursor: pointer; box-shadow: 0 5px 15px rgba(5, 150, 105, 0.2); transition: 0.3s; }
+.btn-simpan:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3); }
+    </style>
+  </head>
+  <body>
+    <!-- Navigasi -->
+    <div class="nav-utama">
+      <div class="nav-box">
+        <div class="logo">MSANTRI</div>
+
+        <div class="menu">
+          <!-- Menggunakan tag <a> agar jadi tautan -->
+          <a href="admin.html" class="nav-item">
+            <i class="fa-solid fa-border-all"></i> Dashboard
+          </a>
+          <!-- Class "aktif" dipindah ke Progres Santri -->
+          <a href="admin_santri.html" class="nav-item aktif">
+            <i class="fa-solid fa-book-open-reader"></i> Progres Santri
+          </a>
+          <a href="admin_info.html" class="nav-item">
+            <i class="fa-solid fa-bullhorn"></i> Informasi
+          </a>
+          <a href="admin_jadwal.html" class="nav-item">
+            <i class="fa-regular fa-calendar-check"></i> Jadwal & Lokasi
+          </a>
+        </div>
+
+        <div class="profil">
+          <!-- Avatar diganti API agar tidak kosong gambarnya -->
+          <img src="https://ui-avatars.com/api/?name=Admin&background=10b981&color=fff" alt="taroprofil" />
+          <a href="login.html" title="Keluar">
+            <i class="fa-solid fa-power-off"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- INI YANG KURANG: Pembungkus Konten Utama -->
+    <div class="konten">
+      
+      <div class="head-hal">
+        <h1 class="judul">Data & Progres Santri</h1>
+        <p class="sub-judul">
+          Kelola capaian hafalan dan berikan catatan khusus untuk wali santri di rumah.
+        </p>
+      </div>
+
+      <div class="baris-flex">
+        <div class="kotak kotak-100">
+          
+          <!-- Header Tabel (Pencarian & Tombol) -->
+          <div class="kepala-kotak">
+            <div class="cari-grup">
+              <i class="fa-solid fa-search"></i>
+              <input type="text" placeholder="Ketik nama santri..." />
+            </div>
+            <button class="tombol-tambah">
+              <i class="fa-solid fa-plus"></i> Tambah Data Santri
+            </button>
+          </div>
+
+          <!-- Tabel Progres -->
+          <div class="tabel-responsif">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 5%">No</th>
+                  <th style="width: 20%">Nama Lengkap</th>
+                  <th style="width: 20%">Capaian Terakhir</th>
+                  <th style="width: 30%">Catatan Pengajar</th>
+                  <th style="width: 10%">Kehadiran</th>
+                  <th style="text-align: center; width: 15%">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong style="color: #0f172a">1</strong></td>
+                  <td><strong style="color: #0f172a">Ahmad Fauzan</strong></td>
+                  <td>Jilid 3 - Hal 15</td>
+                  <td class="catatan-teks">
+                    <i class="fa-regular fa-comment-dots" style="color: #10b981; margin-right: 5px"></i>
+                    Alhamdulillah lancar, siap lanjut halaman berikutnya.
+                  </td>
+                  
+                  <!-- INI BAGIAN YANG DIUBAH: Badge menjadi Select Interaktif -->
+                  <td>
+                    <div class="select-wrapper">
+                      <select class="status-select status-hadir" onchange="ubahStatus(this)">
+                        <option value="hadir" selected>HADIR</option>
+                        <option value="izin">IZIN</option>
+                        <option value="sakit">SAKIT</option>
+                        <option value="alpha">ALPHA</option>
+                      </select>
+                    </div>
+                  </td>
+
+                  <td align="center">
+                    <div class="grup-aksi">
+                      <button class="aksi-edit" title="Edit Data">
+                        <i class="fa-solid fa-pen"></i>
+                      </button>
+                      <button class="aksi-hapus" title="Hapus">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong style="color: #0f172a">2</strong></td>
+                  <td><strong style="color: #0f172a">Aisyah Humaira</strong></td>
+                  <td>Surah An-Naba - Ayat 10</td>
+                  <td class="catatan-teks">
+                    <i class="fa-regular fa-comment-dots" style="color: #10b981; margin-right: 5px"></i>
+                    Mohon dibantu murajaah (mengulang) ayat 5-10 di rumah ya Bun.
+                  </td>
+
+                  <!-- INI BAGIAN YANG DIUBAH: Badge menjadi Select Interaktif -->
+                  <td>
+                    <div class="select-wrapper">
+                      <select class="status-select status-izin" onchange="ubahStatus(this)">
+                        <option value="hadir">HADIR</option>
+                        <option value="izin" selected>IZIN</option>
+                        <option value="sakit">SAKIT</option>
+                        <option value="alpha">ALPHA</option>
+                      </select>
+                    </div>
+                  </td>
+
+                  <td align="center">
+                    <div class="grup-aksi">
+                      <button class="aksi-edit" title="Edit Data">
+                        <i class="fa-solid fa-pen"></i>
+                      </button>
+                      <button class="aksi-hapus" title="Hapus">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong style="color: #0f172a">3</strong></td>
+                  <td><strong style="color: #0f172a">Budi Santoso</strong></td>
+                  <td>Jilid 4 - Hal 2</td>
+                  <td class="catatan-teks" style="color: #94a3b8">
+                    <em>- Belum ada catatan -</em>
+                  </td>
+
+                  <!-- INI BAGIAN YANG DIUBAH: Badge menjadi Select Interaktif -->
+                  <td>
+                    <div class="select-wrapper">
+                      <select class="status-select status-alpha" onchange="ubahStatus(this)">
+                        <option value="hadir">HADIR</option>
+                        <option value="izin">IZIN</option>
+                        <option value="sakit">SAKIT</option>
+                        <option value="alpha" selected>ALPHA</option>
+                      </select>
+                    </div>
+                  </td>
+
+                  <td align="center">
+                    <div class="grup-aksi">
+                      <button class="aksi-edit" title="Edit Data">
+                        <i class="fa-solid fa-pen"></i>
+                      </button>
+                      <button class="aksi-hapus" title="Hapus">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+    <!-- Penutup Konten Utama -->
+
+    <!-- TAMBAHKAN SCRIPT INI TEPAT DI ATAS </body> -->
+    <script>
+      // Fungsi untuk mengubah warna badge select secara otomatis saat diklik
+      function ubahStatus(selectElement) {
+        // Hapus semua warna sebelumnya
+        selectElement.classList.remove('status-hadir', 'status-izin', 'status-sakit', 'status-alpha');
+        
+        // Tambahkan warna baru sesuai pilihan Ustadzah
+        if (selectElement.value === 'hadir') {
+          selectElement.classList.add('status-hadir');
+        } else if (selectElement.value === 'izin') {
+          selectElement.classList.add('status-izin');
+        } else if (selectElement.value === 'sakit') {
+          selectElement.classList.add('status-sakit');
+        } else if (selectElement.value === 'alpha') {
+          selectElement.classList.add('status-alpha');
+        }
+      }
+    </script>
+  </body>
+</html>

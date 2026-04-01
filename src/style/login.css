@@ -1,0 +1,168 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Poppins", Helvetica, sans-serif;
+  color: #475569;
+  background-color: #f4fbf7;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Efek latar belakang estetik */
+  background-image:
+    radial-gradient(
+      circle at top left,
+      rgba(16, 185, 129, 0.1),
+      transparent 40%
+    ),
+    url("https://www.transparenttextures.com/patterns/arabesque.png");
+}
+
+.login-container {
+  width: 100%;
+  max-width: 640px;
+  padding: 20px;
+}
+
+.login-card {
+  background: #ffffff;
+  border-radius: 50px 0 50px 0px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(6, 78, 59, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Aksen garis hijau di atas kartu */
+.login-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+/* Header Logo */
+.brand-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.brand-header h1 {
+  font-family: "Amiri", serif;
+  font-size: 36px;
+  color: #064e3b; /* Hijau Zamrud Gelap */
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.brand-header p {
+  font-size: 13px;
+  font-weight: 600;
+  color: #10b981;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* Teks Selamat Datang */
+.welcome-text {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.welcome-text h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+.welcome-text p {
+  font-size: 18px;
+  color: #64748b;
+}
+
+/* Form Style */
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #064e3b;
+  margin-bottom: 8px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-wrapper i {
+  position: absolute;
+  left: 16px;
+  color: #16ef45;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.form-control {
+  width: 100%;
+  padding: 14px 16px 14px 45px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px 0 14px 0px;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.3px;
+  color: #1e293b;
+  background: #f8faf9;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* Efek Fokus Hijau */
+.form-control:focus {
+  border-color: #10b981;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+.form-control:focus + i {
+  color: #10b981;
+}
+
+/* Tombol Login */
+.btn-login {
+  width: 100%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 14px 0 14px 0px;
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  letter-spacing: 0.3px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+  transition: all 0.3s ease;
+  margin-top: 30px;
+}
+.btn-login:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, #059669, #064e3b);
+}
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 20px;
+  }
+}
