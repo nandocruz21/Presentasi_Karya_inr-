@@ -225,9 +225,7 @@ header {
   color: #cbd5e1;
 }
 
-/* =========================================================
-   MODAL / POP-UP BIODATA
-   ========================================================= */
+/* MODAL / POP-UP BIODATA */
 .modal-overlay {
   position: fixed;
   top: 0;
