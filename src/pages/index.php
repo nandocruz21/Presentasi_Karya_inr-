@@ -89,12 +89,13 @@ $q_galeri = mysqli_query($koneksi, "SELECT * FROM galeri ORDER BY id_galeri DESC
           <div class="text-sambutan">
            <img src="../../images/profil.jpeg" alt="demn" class="foto-kepala">
             <p><strong>Assalamu'alaikum Warahmatullahi Wabarakatuh</strong></p>
-              <p>Alhamdulillah segala puji bagi Allah swt, salawat dan salam semoga selalu dilimpahkan Allah kepada Rasul-Nya Nabi Muhammad beserta keluarga dan para sahabat dan orang-orang yang konsisten berpegang dengan ajaran dan sunnahnya pada setiap masa hingga datangnya hari pembalasan kelak.</p>
-              <p>Mengupayakan institusi pendidikan Islam yang dapat dan mampu melahirkan kader-kader pecinta Al-Quran merupakan amal usaha yang sangat mulia. Oleh karena itu, kehadiran TPQ <?= htmlspecialchars($dt_atur['nama_tpq']) ?> ini merupakan sebuah dedikasi kami untuk ummat.</p>
-
-              <p>Kami menyambut baik kehadiran website resmi ini. Tujuan utamanya adalah sebagai sarana informasi dan komunikasi antar pengurus TPQ, wali santri, dan masyarakat luas. Melalui website ini, wali santri dapat dengan mudah memantau perkembangan hafalan putra-putrinya secara online dan real-time.</p>
+              <p>Segala puji bagi Allah SWT, Tuhan semesta alam. Shalawat dan salam semoga senantiasa menyertai Rasulullah Muhammad SAW, keluarga, serta para sahabatnya.</p>
+              <p>Ayah dan Bunda yang kami hormati, mendidik anak-anak menjadi generasi pecinta Al-Qur'an adalah cita-cita kita bersama. Oleh karena itu, TPQ <?= htmlspecialchars($dt_atur['nama_tpq'])?> terus berkomitmen memberikan dedikasi terbaik untuk membimbing putra-putri tercinta.</p>
               
-              <p>Akhir kata, kami berharap inovasi ini dapat meningkatkan sinergi antara TPQ dan orang tua di rumah. Wassalamu'alaikum Warahmatullahi Wabarakatuh.</p>
+
+              <p>Di era digital ini, kami sangat antusias menghadirkan website resmi TPQ Miftahul Jannah. Kami memahami betapa pentingnya peran orang tua dalam memantau perkembangan belajar anak. Melalui layanan ini, Ayah dan Bunda kini dapat dengan mudah melihat catatan hafalan dan kehadiran Ananda secara real-time dari mana saja.</p>
+              
+              <p>Kami berharap fasilitas ini dapat menjadi jembatan komunikasi yang hangat antara TPQ dan rumah. Mari bersama-sama kita wujudkan generasi masa depan yang cerdas dengan cahaya Al-Qur'an. Wassalamu'alaikum Warahmatullahi Wabarakatuh.</p>
           </div>
         </div>
     
@@ -407,6 +408,56 @@ $q_galeri = mysqli_query($koneksi, "SELECT * FROM galeri ORDER BY id_galeri DESC
         link.addEventListener('click', () => {
           document.getElementById('navMenu').classList.remove('show');
         });
+      });
+    </script>
+
+    <!-- SCRIPT AUTO SCROLL GALERI (MELINGKAR TANPA JEDA) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const galeriContainer = document.querySelector('.gambar-utama');
+
+        // Pastikan galerinya ada dan memiliki isi foto
+        if(galeriContainer && galeriContainer.children.length > 0) {
+          
+          // Override CSS bawaan yang bisa membuat scroll tersendat
+          galeriContainer.style.scrollBehavior = 'auto';
+          galeriContainer.style.scrollSnapType = 'none';
+          
+          // Menggandakan (duplikat) isi galeri dan memasukkannya ke container
+          // Ini trik utama agar fotonya bisa terus menyambung ke foto pertama secara mulus
+          const galeriIsiAwal = galeriContainer.innerHTML;
+          galeriContainer.innerHTML += galeriIsiAwal; 
+          
+          let scrollSpeed = 1; // Kecepatan scroll (1 pixel per frame)
+          let isHovered = false;
+          let animationId;
+
+          // Fungsi yang dipanggil terus-menerus oleh browser sehalus 60 frame per detik
+          function autoScrollLoop() {
+            if (!isHovered) {
+              galeriContainer.scrollLeft += scrollSpeed;
+              
+              // Jika scroll sudah mencapai setengah dari lebar keseluruhan (yaitu panjang galeri awal),
+              // reset posisinya kembali ke 0 dengan seketika. Karena gambarnya duplikat, tidak akan ada lompatan visual.
+              if (galeriContainer.scrollLeft >= galeriContainer.scrollWidth / 2) {
+                galeriContainer.scrollLeft = 0;
+              }
+            }
+            // Ulangi animasi di frame berikutnya
+            animationId = requestAnimationFrame(autoScrollLoop);
+          }
+
+          // Memulai animasi melingkar
+          autoScrollLoop();
+
+          // Memberhentikan scroll sementara jika pengunjung mengarahkan mouse (PC)
+          galeriContainer.addEventListener('mouseenter', () => isHovered = true);
+          galeriContainer.addEventListener('mouseleave', () => isHovered = false);
+
+          // Memberhentikan scroll sementara jika pengunjung menahan/menyentuh layar (HP)
+          galeriContainer.addEventListener('touchstart', () => isHovered = true);
+          galeriContainer.addEventListener('touchend', () => isHovered = false);
+        }
       });
     </script>
   </body>

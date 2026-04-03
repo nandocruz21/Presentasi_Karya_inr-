@@ -1,33 +1,43 @@
-function filterSantri() {
-        let input = document.getElementById('searchInput').value.toLowerCase();
-        let cards = document.getElementsByClassName('santri-item');
-        let emptyState = document.getElementById('emptyState');
-        let foundCount = 0;
+        // --- JS MODAL & PENCARIAN YANG SUDAH DISEDERHANAKAN (ANTI BENTROK) ---
 
-        // Jika kotak pencarian kosong, sembunyikan semua kartu
-        if(input === "") {
-            for (let i = 0; i < cards.length; i++) { cards[i].style.display = "none"; }
-            emptyState.style.display = "none";
-            return; // Berhenti di sini
+        const modal = document.getElementById('modalBiodata');
+
+        // Fungsi membuka modal (Membaca dari atribut kartu yang diklik)
+        function lihatBiodataUser(card) {
+            document.getElementById('bioNama').innerText = card.getAttribute('data-nama') || '-';
+            document.getElementById('bioTTL').innerText = card.getAttribute('data-ttl') || '-';
+            document.getElementById('bioAlamat').innerText = card.getAttribute('data-alamat') || '-';
+            document.getElementById('bioOrtu').innerText = card.getAttribute('data-ortu') || '-';
+            document.getElementById('bioWA').innerText = card.getAttribute('data-wa') || '-';
+            
+            modal.style.display = 'flex';
         }
 
-        // Jika ada ketikan, mulai cari
-        for (let i = 0; i < cards.length; i++) {
-          let nameElement = cards[i].querySelector('.santri-name');
-          let nameText = nameElement.innerText.toLowerCase();
-
-          if (nameText.includes(input)) {
-            cards[i].style.display = "flex"; // Tampilkan jika cocok
-            foundCount++;
-          } else {
-            cards[i].style.display = "none"; // Sembunyikan jika tidak cocok
-          }
+        // Fungsi menutup modal
+        function tutupBiodata() {
+            modal.style.display = 'none';
         }
 
-        // Munculkan peringatan "Tidak ditemukan" jika foundCount = 0
-        if (foundCount === 0) {
-          emptyState.style.display = "block";
-        } else {
-          emptyState.style.display = "none";
+        // Tutup modal jika klik di luar area konten
+        window.onclick = function(e) { 
+            if (e.target === modal) {
+                tutupBiodata();
+            }
+        };
+
+        // Fungsi Filter Pencarian
+        function filterSantri() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.querySelectorAll('.santri-item');
+            let hasResults = false;
+
+            items.forEach(item => {
+                const name = item.querySelector('.santri-name').innerText.toLowerCase();
+                const isMatch = name.includes(input);
+                
+                item.style.display = isMatch ? 'flex' : 'none';
+                if (isMatch) hasResults = true;
+            });
+
+            document.getElementById('emptyState').style.display = hasResults ? 'none' : 'block';
         }
-      }

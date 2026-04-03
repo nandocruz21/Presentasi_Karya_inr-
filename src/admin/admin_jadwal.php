@@ -35,7 +35,7 @@ $data_atur = mysqli_fetch_assoc($query_atur);
     <!-- SIDEBAR BARU -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <img src="" alt="Logo" />
+        <img src="../../images/logo.png" alt="Logo" width="40px" />
         <p>MSANTRI</p>
         <!-- Tombol Close Sidebar (Khusus HP) -->
         <button class="btn-close-sidebar" onclick="toggleSidebar()">

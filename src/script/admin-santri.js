@@ -7,23 +7,28 @@ function bukaModalTambah() {
   document.getElementById('inputTanggalLahir').value = "";
   document.getElementById('inputAlamat').value = "";
   document.getElementById('inputNamaOrtu').value = "";
+  document.getElementById('inputWa').value = ""; // Tambahan WA
   document.getElementById('inputCapaian').value = "";
   document.getElementById('inputCatatan').value = "";
   document.getElementById('modalTambahSantri').classList.add('show');
+  // Jika sebelumnya error tidak mau muncul, pastikan CSS Anda menggunakan class .show { display: flex !important; }
 }
 
-// Menyiapkan modal untuk mode Edit (Mengisi data lama ke dalam form)
-function bukaModalEdit(id, nama, tempat, tgl, alamat, ortu, capaian, catatan) {
+// Menyiapkan modal untuk mode Edit (Menggunakan data-attribute agar ANTI-ERROR)
+function bukaModalEdit(btn) {
   document.getElementById('judulModal').innerText = "Edit Data Santri";
   document.getElementById('teksTombol').innerText = "Simpan Perubahan";
-  document.getElementById('inputIdSantri').value = id; // Isi ID agar simpan_santri melakukan UPDATE
-  document.getElementById('inputNama').value = nama;
-  document.getElementById('inputTempatLahir').value = tempat || "";
-  document.getElementById('inputTanggalLahir').value = tgl || "";
-  document.getElementById('inputAlamat').value = alamat || "";
-  document.getElementById('inputNamaOrtu').value = ortu || "";
-  document.getElementById('inputCapaian').value = capaian;
-  document.getElementById('inputCatatan').value = catatan;
+  
+  document.getElementById('inputIdSantri').value = btn.getAttribute('data-id');
+  document.getElementById('inputNama').value = btn.getAttribute('data-nama');
+  document.getElementById('inputTempatLahir').value = btn.getAttribute('data-tempat');
+  document.getElementById('inputTanggalLahir').value = btn.getAttribute('data-tgl');
+  document.getElementById('inputAlamat').value = btn.getAttribute('data-alamat');
+  document.getElementById('inputNamaOrtu').value = btn.getAttribute('data-ortu');
+  document.getElementById('inputWa').value = btn.getAttribute('data-wa'); // Tambahan WA
+  document.getElementById('inputCapaian').value = btn.getAttribute('data-capaian');
+  document.getElementById('inputCatatan').value = btn.getAttribute('data-catatan');
+  
   document.getElementById('modalTambahSantri').classList.add('show');
 }
 
@@ -55,7 +60,7 @@ function ubahStatus(selectElement) {
       if (data.trim() === "Berhasil diupdate") {
           console.log("Mantap: Status berhasil disimpan ke database!");
       } else {
-          console.error("Gagal: " + data);
+          console.error("Respon dari server: " + data);
       }
   })
   .catch(error => {
@@ -92,18 +97,20 @@ document.querySelectorAll('.ini-nav').forEach(link => {
   });
 });
 
-// --- FUNGSI BARU UNTUK BIODATA ---
+// --- FUNGSI BIODATA (MENGGUNAKAN DATA-ATTRIBUTE AGAR ANTI-ERROR) ---
 
-// Fungsi memunculkan modal Lihat Biodata
-function lihatBiodata(nama, tempat, tgl, alamat, ortu) {
-  document.getElementById('viewNama').innerText = nama || '-';
+function lihatBiodata(btn) {
+  document.getElementById('viewNama').innerText = btn.getAttribute('data-nama') || '-';
   
+  let tempat = btn.getAttribute('data-tempat');
+  let tgl = btn.getAttribute('data-tgl');
   let tglLahir = (tgl && tgl !== '0000-00-00') ? tgl : '-';
   let tmptLahir = tempat || '-';
   document.getElementById('viewLahir').innerText = tmptLahir + ', ' + tglLahir;
   
-  document.getElementById('viewAlamat').innerText = alamat || '-';
-  document.getElementById('viewOrtu').innerText = ortu || '-';
+  document.getElementById('viewAlamat').innerText = btn.getAttribute('data-alamat') || '-';
+  document.getElementById('viewOrtu').innerText = btn.getAttribute('data-ortu') || '-';
+  document.getElementById('viewWaOrtu').innerText = btn.getAttribute('data-wa') || '-'; // Tambahan WA
   
   // Tampilkan modal
   document.getElementById('modalBiodata').classList.add('show');

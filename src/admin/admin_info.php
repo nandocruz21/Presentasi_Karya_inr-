@@ -30,7 +30,7 @@ $query_info = mysqli_query($koneksi, "SELECT * FROM informasi ORDER BY tanggal_p
     <!-- SIDEBAR BARU -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <img src="" alt="Logo" />
+        <img src="../../images/logo.png" alt="Logo" width="40px" />
         <p>MSANTRI</p>
         <!-- Tombol Close Sidebar (Khusus HP) -->
         <button class="btn-close-sidebar" onclick="toggleSidebar()">

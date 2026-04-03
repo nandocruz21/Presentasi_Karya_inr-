@@ -93,7 +93,7 @@ $query_galeri = mysqli_query($koneksi, "SELECT * FROM galeri ORDER BY id_galeri 
     <!-- SIDEBAR (Identik dengan Dashboard) -->
     <aside class="sidebar">
         <div class="sidebar-header">
-            <img src="../../gambar/logo.png" alt="Logo" />
+            <img src="../../images/logo.png" alt="Logo" width="40px" />
             <p>MSANTRI</p>
             <button class="btn-close-sidebar" onclick="toggleSidebar()">
                 <i class="fa-solid fa-xmark"></i>

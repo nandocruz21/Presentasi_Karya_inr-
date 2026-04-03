@@ -19,7 +19,10 @@ header {
   padding: 20px 50px;
   background: #ffffff;
   display: flex;
+  width: 100%;
+  position: fixed;
   align-items: center;
+  z-index: 1000;
   justify-content: space-between;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
@@ -55,6 +58,7 @@ header {
   padding: 60px 20px;
   max-width: 800px;
   margin: 0 auto;
+  margin-top: 100px;
   width: 100%;
 }
 
@@ -119,12 +123,12 @@ header {
   padding: 30px;
   border: 1px solid rgba(209, 250, 229, 0.8);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
-  display: none; 
+  display: flex; /* <-- PERBAIKAN: Diubah dari none menjadi flex agar langsung muncul */
   justify-content: space-between;
   align-items: center;
   transition: 0.3s;
   animation: fadeIn 0.4s ease-out;
-  cursor: pointer; /* Memberikan efek kursor bahwa ini bisa diklik */
+  cursor: pointer;
 }
 .student-card:hover {
   transform: translateY(-5px);
@@ -151,7 +155,7 @@ header {
   box-shadow: 0 5px 15px rgba(5, 150, 105, 0.2);
 }
 .student-details{
-  flex: 1; /* Mengubah width: 400px menjadi fleksibel */
+  flex: 1;
   width: 100%;
 }
 .student-details h3 {
@@ -339,7 +343,7 @@ header {
     gap: 20px;
   }
   .student-info {
-    width: 100%; /* Memastikan area profil penuh sampai kanan layar HP */
+    width: 100%;
   }
   .student-progress {
     text-align: left;

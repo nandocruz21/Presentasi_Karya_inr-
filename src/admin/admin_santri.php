@@ -29,11 +29,20 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
+    <style>
+        /* Memastikan class .show dari Javascript bekerja memunculkan Modal */
+        .modal-overlay {
+            display: none;
+        }
+        .modal-overlay.show {
+            display: flex !important;
+        }
+    </style>
 </head>
 <body>
     <aside class="sidebar">
       <div class="sidebar-header">
-        <img src="../../gambar/logo.png" alt="Logo">
+        <img src="../../images/logo.png" alt="Logo" width="40px">
         <p>MSANTRI</p>
         <button class="btn-close-sidebar" onclick="toggleSidebar()">
           <i class="fa-solid fa-xmark"></i>
@@ -115,15 +124,27 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                             <?php if ($query_santri && mysqli_num_rows($query_santri) > 0): ?>
                                 <?php $no = 1; ?>
                                 <?php while ($data = mysqli_fetch_assoc($query_santri)): ?>
+                                    <?php
+                                        // PENGAMANAN SUPER: Mengubah semua karakter spesial menjadi aman untuk HTML
+                                        $id_aman = htmlspecialchars($data['id_santri'] ?? '', ENT_QUOTES);
+                                        $nama_aman = htmlspecialchars($data['nama_lengkap'] ?? '', ENT_QUOTES);
+                                        $tempat_aman = htmlspecialchars($data['tempat_lahir'] ?? '', ENT_QUOTES);
+                                        $tgl_aman = htmlspecialchars($data['tanggal_lahir'] ?? '', ENT_QUOTES);
+                                        $alamat_aman = htmlspecialchars($data['alamat'] ?? '', ENT_QUOTES);
+                                        $ortu_aman = htmlspecialchars($data['nama_ortu'] ?? '', ENT_QUOTES);
+                                        $wa_aman = htmlspecialchars($data['no_wa_ortu'] ?? '', ENT_QUOTES);
+                                        $capaian_aman = htmlspecialchars($data['capaian_hafalan'] ?? '', ENT_QUOTES);
+                                        $catatan_aman = htmlspecialchars($data['catatan_pengajar'] ?? '', ENT_QUOTES);
+                                    ?>
                                     <tr>
                                         <td><strong style="color: #0f172a"><?= $no++ ?></strong></td>
-                                        <td><strong style="color: #0f172a"><?= htmlspecialchars($data["nama_lengkap"]) ?></strong></td>
-                                        <td><?= htmlspecialchars($data["capaian_hafalan"]) ?></td>
+                                        <td><strong style="color: #0f172a"><?= $nama_aman ?></strong></td>
+                                        <td><?= $capaian_aman ?></td>
                                         
                                         <td class="catatan-teks">
                                             <?php if (!empty($data["catatan_pengajar"]) && $data["catatan_pengajar"] != "- Belum ada catatan -"): ?>
                                                 <i class="fa-regular fa-comment-dots" style="color: #10b981; margin-right: 5px"></i>
-                                                <?= htmlspecialchars($data["catatan_pengajar"]) ?>
+                                                <?= $catatan_aman ?>
                                             <?php else: ?>
                                                 <em style="color: #94a3b8;">- Belum ada catatan -</em>
                                             <?php endif; ?>
@@ -132,7 +153,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                                         <td>
                                             <div class="select-wrapper">
                                                 <select class="status-select status-<?= $data['kehadiran'] ?>" 
-                                                        data-id="<?= $data['id_santri'] ?>" 
+                                                        data-id="<?= $id_aman ?>" 
                                                         onchange="ubahStatus(this)">
                                                     <option value="hadir" <?= $data['kehadiran'] == 'hadir' ? 'selected' : '' ?>>HADIR</option>
                                                     <option value="izin" <?= $data['kehadiran'] == 'izin' ? 'selected' : '' ?>>IZIN</option>
@@ -144,18 +165,35 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                                         
                                         <td align="center">
                                             <div class="grup-aksi">
+                                                <!-- Tombol Info (Pake Data-Attribute, Anti Error!) -->
                                                 <button type="button" class="aksi-info" title="Lihat Biodata Lengkap" 
-                                                        onclick='lihatBiodata(<?= json_encode($data["nama_lengkap"] ?? "") ?>, <?= json_encode($data["tempat_lahir"] ?? "") ?>, <?= json_encode($data["tanggal_lahir"] ?? "") ?>, <?= json_encode($data["alamat"] ?? "") ?>, <?= json_encode($data["nama_ortu"] ?? "") ?>)'>
+                                                        data-nama="<?= $nama_aman ?>"
+                                                        data-tempat="<?= $tempat_aman ?>"
+                                                        data-tgl="<?= $tgl_aman ?>"
+                                                        data-alamat="<?= $alamat_aman ?>"
+                                                        data-ortu="<?= $ortu_aman ?>"
+                                                        data-wa="<?= $wa_aman ?>"
+                                                        onclick="lihatBiodata(this)">
                                                     <i class="fa-solid fa-address-card"></i>
                                                 </button>
 
-                                                <button class="aksi-edit" title="Edit Data" 
-                                                        onclick="bukaModalEdit('<?= $data['id_santri'] ?>', '<?= addslashes($data['nama_lengkap']) ?>', '<?= addslashes($data['tempat_lahir'] ?? '') ?>', '<?= addslashes($data['tanggal_lahir'] ?? '') ?>', '<?= addslashes($data['alamat'] ?? '') ?>', '<?= addslashes($data['nama_ortu'] ?? '') ?>', '<?= addslashes($data['capaian_hafalan']) ?>', '<?= addslashes($data['catatan_pengajar']) ?>')">
+                                                <!-- Tombol Edit (Pake Data-Attribute, Anti Error!) -->
+                                                <button type="button" class="aksi-edit" title="Edit Data" 
+                                                        data-id="<?= $id_aman ?>"
+                                                        data-nama="<?= $nama_aman ?>"
+                                                        data-tempat="<?= $tempat_aman ?>"
+                                                        data-tgl="<?= $tgl_aman ?>"
+                                                        data-alamat="<?= $alamat_aman ?>"
+                                                        data-ortu="<?= $ortu_aman ?>"
+                                                        data-wa="<?= $wa_aman ?>"
+                                                        data-capaian="<?= $capaian_aman ?>"
+                                                        data-catatan="<?= $catatan_aman ?>"
+                                                        onclick="bukaModalEdit(this)">
                                                     <i class="fa-solid fa-pen"></i>
                                                 </button>
                                                 
-                                                <a href="hapus_santri.php?id=<?= $data['id_santri'] ?>" class="aksi-hapus" title="Hapus Data" 
-                                                   onclick="return confirm('Apakah Anda yakin ingin menghapus data <?= addslashes($data['nama_lengkap']) ?>?')" style="display:flex;">
+                                                <a href="hapus_santri.php?id=<?= $id_aman ?>" class="aksi-hapus" title="Hapus Data" 
+                                                   onclick="return confirm('Apakah Anda yakin ingin menghapus data <?= addslashes($nama_aman) ?>?')" style="display:flex;">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </a>
                                             </div>
@@ -174,6 +212,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
         </div>
     </main>
 
+    <!-- MODAL BIODATA -->
     <div id="modalBiodata" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -200,9 +239,15 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                 <label style="display: block; color: #94a3b8; font-size: 11px; text-transform: uppercase; font-weight: 700; margin-bottom: 5px;">Nama Orang Tua / Wali</label>
                 <p id="viewOrtu" style="font-size: 15px; font-weight: 600; color: #1e293b;">-</p>
             </div>
+            
+            <div style="background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 12px; border: 1px solid #f1f5f9;">
+                <label style="display: block; color: #94a3b8; font-size: 11px; text-transform: uppercase; font-weight: 700; margin-bottom: 5px;">No. WhatsApp Orang Tua</label>
+                <p id="viewWaOrtu" style="font-size: 15px; font-weight: 600; color: #000000;">-</p>
+            </div>
         </div>
     </div>
     
+    <!-- MODAL TAMBAH/EDIT SANTRI -->
     <div id="modalTambahSantri" class="modal-overlay">
         <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
             <div class="modal-header">
@@ -233,9 +278,18 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                     <label>Alamat Lengkap</label>
                     <textarea name="alamat" id="inputAlamat" rows="2" placeholder="Masukkan alamat lengkap..."></textarea>
                 </div>
-                <div class="grup-form-modal">
-                    <label>Nama Orang Tua / Wali</label>
-                    <input type="text" name="nama_ortu" id="inputNamaOrtu" placeholder="Masukkan nama orang tua...">
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="grup-form-modal">
+                        <label>Nama Orang Tua / Wali</label>
+                        <input type="text" name="nama_ortu" id="inputNamaOrtu" placeholder="Masukkan nama orang tua...">
+                    </div>
+                    
+                    <div class="grup-form-modal">
+                        <label>No. WhatsApp Orang Tua</label>
+                        <!-- Form yang benar untuk WA -->
+                        <input type="text" name="no_wa_ortu" id="inputWaOrtu" placeholder="Contoh: 081234567890">
+                    </div>
                 </div>
 
                 <div class="grup-form-modal">
@@ -254,7 +308,120 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
         </div>
     </div>
 
-    <script src="../script/admin-santri.js"></script>
+    <!-- Script Internal agar Anti-Cache & Anti-Macet -->
+    <script>
+        function bukaModalTambah() {
+            document.getElementById('judulModal').innerText = "Tambah Santri Baru";
+            document.getElementById('teksTombol').innerText = "Simpan Data";
+            
+            document.getElementById('inputIdSantri').value = ""; 
+            document.getElementById('inputNama').value = "";
+            document.getElementById('inputTempatLahir').value = "";
+            document.getElementById('inputTanggalLahir').value = "";
+            document.getElementById('inputAlamat').value = "";
+            document.getElementById('inputNamaOrtu').value = "";
+            document.getElementById('inputWaOrtu').value = "";
+            document.getElementById('inputCapaian').value = "";
+            document.getElementById('inputCatatan').value = "";
+            
+            document.getElementById('modalTambahSantri').classList.add('show');
+        }
+
+        function bukaModalEdit(btn) {
+            document.getElementById('judulModal').innerText = "Edit Data Santri";
+            document.getElementById('teksTombol').innerText = "Update Data";
+            
+            document.getElementById('inputIdSantri').value = btn.getAttribute('data-id');
+            document.getElementById('inputNama').value = btn.getAttribute('data-nama');
+            document.getElementById('inputTempatLahir').value = btn.getAttribute('data-tempat');
+            document.getElementById('inputTanggalLahir').value = btn.getAttribute('data-tgl');
+            document.getElementById('inputAlamat').value = btn.getAttribute('data-alamat');
+            document.getElementById('inputNamaOrtu').value = btn.getAttribute('data-ortu');
+            document.getElementById('inputWaOrtu').value = btn.getAttribute('data-wa');
+            document.getElementById('inputCapaian').value = btn.getAttribute('data-capaian');
+            document.getElementById('inputCatatan').value = btn.getAttribute('data-catatan');
+            
+            document.getElementById('modalTambahSantri').classList.add('show');
+        }
+
+        function tutupModalForm() {
+            document.getElementById('modalTambahSantri').classList.remove('show');
+        }
+
+        function lihatBiodata(btn) {
+            document.getElementById('viewNama').innerText = btn.getAttribute('data-nama') || '-';
+            
+            let tempat = btn.getAttribute('data-tempat');
+            let tgl = btn.getAttribute('data-tgl');
+            let tglLahir = (tgl && tgl !== '0000-00-00') ? tgl : '-';
+            let tmptLahir = tempat || '-';
+            document.getElementById('viewLahir').innerText = tmptLahir + ', ' + tglLahir;
+            
+            document.getElementById('viewAlamat').innerText = btn.getAttribute('data-alamat') || '-';
+            document.getElementById('viewOrtu').innerText = btn.getAttribute('data-ortu') || '-';
+            document.getElementById('viewWaOrtu').innerText = btn.getAttribute('data-wa') || '-';
+            
+            document.getElementById('modalBiodata').classList.add('show');
+        }
+
+        function tutupModalBiodata() {
+            document.getElementById('modalBiodata').classList.remove('show');
+        }
+
+        // Tutup modal jika klik di luar kotak
+        window.onclick = function(event) {
+            let modals = document.querySelectorAll('.modal-overlay');
+            modals.forEach(function(modal) {
+                if (event.target === modal) {
+                    modal.classList.remove('show');
+                }
+            });
+        }
+
+        function ubahStatus(selectElement) {
+            selectElement.classList.remove('status-hadir', 'status-izin', 'status-sakit', 'status-alpha');
+            let statusBaru = selectElement.value;
+            selectElement.classList.add('status-' + statusBaru);
+
+            let idSantri = selectElement.getAttribute('data-id');
+
+            fetch('update_status.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'id=' + idSantri + '&status=' + statusBaru
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data.trim() === "Berhasil diupdate") {
+                    console.log("Status berhasil disimpan ke database!");
+                } else {
+                    console.error("Gagal: " + data);
+                }
+            })
+            .catch(error => {
+                console.error("Kesalahan koneksi:", error);
+                alert("Terjadi kesalahan jaringan, status gagal disimpan!");
+            });
+        }
+
+        function cariSantri() {
+            const input = document.getElementById("inputCari").value.toUpperCase();
+            const table = document.getElementById("tabelSantri");
+            const tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    let txtValue = td.textContent || td.innerText;
+                    tr[i].style.display = txtValue.toUpperCase().indexOf(input) > -1 ? "" : "none";
+                }
+            }
+        }
+    </script>
+
+    <!-- Sweet Alert PHP Handle -->
     <?php if (isset($_GET['status'])): ?>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -271,6 +438,6 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                 <?php endif; ?>
             });
         </script>
-<?php endif; ?>
+    <?php endif; ?>
 </body>
 </html>
