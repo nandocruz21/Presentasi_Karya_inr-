@@ -17,24 +17,6 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
     <title>Cek Progres Santri - MSANTRI</title>
     <link rel="stylesheet" href="../style/kdr.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <style>
-        /* Memastikan area hasil terlihat dengan baik */
-        .results-area {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
-            max-width: 800px;
-        }
-        .no-data {
-            text-align: center;
-            padding: 40px;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-    </style>
 </head>
 <body>
     <!-- Header & Tombol Kembali -->
@@ -42,7 +24,7 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
       <div class="logo">      
       <img src="../../images/logo.png" alt="logo" width="50px">
       MSANTRI</div>
-      <a href="index.php" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda</a>
+      <a href="index.php" class="btn-back">Kembali<i class="fa-solid fa-arrow-right"></i></a>
     </header>
 
     <!-- Konten Utama -->
@@ -80,27 +62,13 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
               // Pastikan status yang masuk ada di array, jika tidak, pakaikan alpha
               $badge = isset($konfigurasi_badge[$status]) ? $konfigurasi_badge[$status] : $konfigurasi_badge['alpha'];
 
-              // 3. PENGAMANAN BIODATA (Termasuk WA Ortu)
-              $tempat_lahir = !empty($data['tempat_lahir']) ? $data['tempat_lahir'] : '-';
-              $tanggal_lahir = !empty($data['tanggal_lahir']) ? $data['tanggal_lahir'] : '-';
-              $ttl_gabung = $tempat_lahir . ', ' . $tanggal_lahir;
-              
-              $alamat = !empty($data['alamat']) ? (string)$data['alamat'] : '-';
-              $nama_ortu = !empty($data['nama_ortu']) ? (string)$data['nama_ortu'] : '-';
-              $no_wa_ortu = !empty($data['no_wa_ortu']) ? (string)$data['no_wa_ortu'] : '-';
-              
+              // Variabel catatan & capaian untuk ditampilkan langsung di kartu
               $catatan = !empty($data['catatan_pengajar']) ? (string)$data['catatan_pengajar'] : '';
               $capaian = !empty($data['capaian_hafalan']) ? (string)$data['capaian_hafalan'] : 'Iqra/Juz Amma';
             ?>
 
-            <!-- Kartu Santri Dinamis (Menggunakan Data Attribute agar Anti Error) -->
-            <div class="student-card santri-item" style="display: flex; cursor: pointer;" 
-                 data-nama="<?= htmlspecialchars($nama_lengkap, ENT_QUOTES) ?>"
-                 data-ttl="<?= htmlspecialchars($ttl_gabung, ENT_QUOTES) ?>"
-                 data-alamat="<?= htmlspecialchars($alamat, ENT_QUOTES) ?>"
-                 data-ortu="<?= htmlspecialchars($nama_ortu, ENT_QUOTES) ?>"
-                 data-wa="<?= htmlspecialchars($no_wa_ortu, ENT_QUOTES) ?>"
-                 onclick="lihatBiodataUser(this)">
+            <!-- Kartu Santri Dinamis (Data Pribadi Dihapus, Onclick Dihapus) -->
+            <div class="student-card santri-item" style="display: flex;">
                  
               <div class="student-info">
                 <!-- Avatar sesuai status -->
@@ -145,42 +113,25 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
       </div>
     </div>
 
-    <!-- MODAL BIODATA -->
-    <div id="modalBiodata" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Biodata Santri</h2>
-                <button onclick="tutupBiodata()" class="btn-close"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="modal-body">
-                <div class="bio-grup">
-                    <p class="bio-label">Nama Lengkap</p> 
-                    <h4 id="bioNama">-</h4>
-                </div>
-                <div class="bio-grup">
-                    <p class="bio-label">Tempat, Tanggal Lahir</p>
-                    <h4 id="bioTTL">-</h4>
-                </div>
-                <div class="bio-grup">
-                    <p class="bio-label">Alamat</p>
-                    <h4 id="bioAlamat">-</h4>
-                </div>
-                <div class="bio-grup">
-                    <p class="bio-label">Nama Orang Tua/Wali</p>
-                    <h4 id="bioOrtu">-</h4>
-                </div>
-                <!-- Form Nomor WA -->
-                <div class="bio-grup">
-                    <p class="bio-label">No. WhatsApp Orang Tua</p>
-                    <h4 id="bioWA" style="color: #000000;">-</h4>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Script JavaScript Internal untuk Filter Pencarian -->
+    <script>
+        // Fungsi Filter Pencarian (Tidak dihapus karena penting untuk mencari nama)
+        function filterSantri() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.querySelectorAll('.santri-item');
+            let hasResults = false;
 
-    <!-- Kita hapus pemanggilan cek_progres.js agar tidak bentrok dengan script di bawah -->
-    <script src="../script/cek_progres.js"></script>
+            items.forEach(item => {
+                const name = item.querySelector('.santri-name').innerText.toLowerCase();
+                const isMatch = name.includes(input);
+                
+                item.style.display = isMatch ? 'flex' : 'none';
+                if (isMatch) hasResults = true;
+            });
 
+            document.getElementById('emptyState').style.display = hasResults ? 'none' : 'block';
+        }
+    </script>
 
 </body>
 </html>

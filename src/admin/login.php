@@ -9,7 +9,7 @@ if(isset($_POST["username"]) && isset($_POST["password"])){
     $password_input = $_POST["password"];
 
     // Cek apakah username = admin DAN password = password
-    if ($username_input === "admin" && $password_input === "rina"){
+    if ($username_input === "admin" && $password_input === "pw"){
         
         // Jika benar, buat sesi login
         $_SESSION["isLoggin"] = "login"; 

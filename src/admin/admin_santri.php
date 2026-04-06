@@ -75,7 +75,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
 
       <div class="sidebar-footer">
         <div class="profile-card">
-          <div class="profile-img">AD</div>
+            <div><img src="../../images/profil.jpeg" alt="" width="40px" style="border-radius: 50%;"></div>
           <div class="profile-info">
             <h4>Administrator</h4>
           </div>
