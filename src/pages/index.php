@@ -23,6 +23,7 @@ $q_galeri = mysqli_query($koneksi, "SELECT * FROM galeri ORDER BY id_galeri DESC
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MSANTRI - TPQ <?= htmlspecialchars($dt_atur['nama_tpq']) ?></title>
+    <link rel="icon" type="image/png" href="../../images/lg.jpeg">
 
     <!-- Ikon & Font -->
     <link

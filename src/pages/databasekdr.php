@@ -2,7 +2,7 @@
 include '../admin/koneksi.php';
 
 // Ambil Semua Data Santri dari Database
-$query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY nama_lengkap ASC");
+$query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY nama_lengkap DESC");
 
 // Ambil data pengaturan dengan sangat aman (hindari error jika tabel pengaturan kosong)
 $query_atur = mysqli_query($koneksi, "SELECT nama_tpq FROM pengaturan LIMIT 1");
@@ -15,6 +15,7 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cek Progres Santri - MSANTRI</title>
+    <link rel="icon" type="image/png" href="../../images/lg.jpeg">
     <link rel="stylesheet" href="../style/kdr.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
@@ -49,30 +50,39 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
             <?php 
               // 1. PENGAMANAN DATA: Pastikan data tidak NULL agar PHP tidak Crash
               $nama_lengkap = !empty($data['nama_lengkap']) ? (string)$data['nama_lengkap'] : 'Santri Tanpa Nama';
-              $inisial = strtoupper(substr($nama_lengkap, 0, 1));
               $status = !empty($data['kehadiran']) ? $data['kehadiran'] : 'alpha';
               
-              // 2. Konfigurasi Badge Berdasarkan Status
+              // 2. AMBIL DATA FOTO SANTRI
+              // Jika di database kosong, set ke default.png
+              $foto_db = !empty($data['foto']) ? $data['foto'] : 'default.png';
+              $path_foto = "../../uploads/" . htmlspecialchars($foto_db, ENT_QUOTES);
+              
+              // 3. Konfigurasi Badge Berdasarkan Status (Teks "HARI INI" dihapus agar lebih netral)
               $konfigurasi_badge = [
-                  'hadir' => ['teks' => 'HADIR HARI INI', 'ikon' => 'fa-check', 'kelas' => 'hadir'],
-                  'izin'  => ['teks' => 'IZIN', 'ikon' => 'fa-envelope', 'kelas' => 'izin'],
-                  'sakit' => ['teks' => 'SAKIT', 'ikon' => 'fa-bed-pulse', 'kelas' => 'izin'],
-                  'alpha' => ['teks' => 'ALPHA (TIDAK HADIR)', 'ikon' => 'fa-xmark', 'kelas' => 'alpha']
+                  'hadir' => ['teks' => 'STATUS: HADIR', 'ikon' => 'fa-check', 'kelas' => 'hadir'],
+                  'izin'  => ['teks' => 'STATUS: IZIN', 'ikon' => 'fa-envelope', 'kelas' => 'izin'],
+                  'sakit' => ['teks' => 'STATUS: SAKIT', 'ikon' => 'fa-bed-pulse', 'kelas' => 'izin'],
+                  'alpha' => ['teks' => 'STATUS: ALPHA', 'ikon' => 'fa-xmark', 'kelas' => 'alpha']
               ];
-              // Pastikan status yang masuk ada di array, jika tidak, pakaikan alpha
               $badge = isset($konfigurasi_badge[$status]) ? $konfigurasi_badge[$status] : $konfigurasi_badge['alpha'];
 
-              // Variabel catatan & capaian untuk ditampilkan langsung di kartu
+              // 4. Variabel catatan & capaian
               $catatan = !empty($data['catatan_pengajar']) ? (string)$data['catatan_pengajar'] : '';
               $capaian = !empty($data['capaian_hafalan']) ? (string)$data['capaian_hafalan'] : 'Iqra/Juz Amma';
+
+              // 5. AMBIL WAKTU TERAKHIR DIUPDATE
+              $waktu_db = !empty($data['waktu_update']) ? $data['waktu_update'] : '';
+              $waktu_tampil = ($waktu_db !== '') ? date('d/m/Y, H:i', strtotime($waktu_db)) : 'Belum diupdate';
             ?>
 
-            <!-- Kartu Santri Dinamis (Data Pribadi Dihapus, Onclick Dihapus) -->
+            <!-- Kartu Santri Dinamis -->
             <div class="student-card santri-item" style="display: flex;">
                  
               <div class="student-info">
-                <!-- Avatar sesuai status -->
-                <div class="student-avatar avatar-<?= $status ?>"><?= $inisial ?></div>
+                <!-- Avatar yang menampilkan FOTO asli santri -->
+                <div class="student-avatar avatar-<?= $status ?>" style="padding: 0; overflow: hidden; background: transparent;">
+                    <img src="<?= $path_foto ?>" alt="Foto <?= htmlspecialchars($nama_lengkap) ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
                 
                 <div class="student-details">
                   <!-- Bagian Menampilkan Nama Lengkap -->
@@ -90,6 +100,12 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
               <div class="student-progress">
                 <div class="progress-label">Capaian Terakhir</div>
                 <div class="progress-value"><?= htmlspecialchars($capaian) ?></div>
+                
+                <!-- Menampilkan kapan data ini dimasukkan oleh Ustadzah -->
+                <div class="waktu-update" title="Waktu terakhir Ustadz/Ustadzah menyimpan data">
+                    <i class="fa-regular fa-clock" style="color: #10b981; margin-right: 3px;"></i> Update: <?= $waktu_tampil ?>
+                </div>
+
                 <span class="badge <?= $badge['kelas'] ?>"><i class="fa-solid <?= $badge['ikon'] ?>"></i> <?= $badge['teks'] ?></span>
               </div>
             </div>
@@ -115,7 +131,7 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
 
     <!-- Script JavaScript Internal untuk Filter Pencarian -->
     <script>
-        // Fungsi Filter Pencarian (Tidak dihapus karena penting untuk mencari nama)
+        // Fungsi Filter Pencarian
         function filterSantri() {
             const input = document.getElementById('searchInput').value.toLowerCase();
             const items = document.querySelectorAll('.santri-item');

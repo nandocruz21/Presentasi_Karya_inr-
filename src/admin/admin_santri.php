@@ -24,22 +24,34 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <!-- Asumsi struktur file: Sesuaikan path CSS dan Image -->
+    <link rel="icon" type="image/png" href="../../images/lg.jpeg">    
     <link rel="stylesheet" href="../style/admin_santri.css" /> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <style>
-        /* Memastikan class .show dari Javascript bekerja memunculkan Modal */
         .modal-overlay {
             display: none;
         }
         .modal-overlay.show {
             display: flex !important;
         }
+        /* Style tambahan untuk foto profil di Modal */
+        .foto-profil-santri {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #10b981;
+            margin: 0 auto 15px auto;
+            display: block;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
+    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-header">
         <img src="../../images/logo.png" alt="Logo" width="40px">
@@ -86,6 +98,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
       </div>
     </aside>
 
+    <!-- MAIN CONTENT -->
     <main class="main-content">
         <button class="btn-hamburger" onclick="toggleSidebar()">
             <i class="fa-solid fa-bars"></i>
@@ -113,9 +126,9 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                         <thead>
                             <tr>
                                 <th style="width: 5%">No</th>
-                                <th style="width: 20%">Nama Lengkap</th>
+                                <th style="width: 25%">Nama Lengkap</th>
                                 <th style="width: 20%">Capaian Terakhir</th>
-                                <th style="width: 25%">Catatan Pengajar</th>
+                                <th style="width: 20%">Catatan Pengajar</th>
                                 <th style="width: 10%">Kehadiran</th>
                                 <th style="text-align: center; width: 20%">Aksi</th>
                             </tr>
@@ -125,7 +138,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                                 <?php $no = 1; ?>
                                 <?php while ($data = mysqli_fetch_assoc($query_santri)): ?>
                                     <?php
-                                        // PENGAMANAN SUPER: Mengubah semua karakter spesial menjadi aman untuk HTML
+                                        // PENGAMANAN & PENGAMBILAN DATA
                                         $id_aman = htmlspecialchars($data['id_santri'] ?? '', ENT_QUOTES);
                                         $nama_aman = htmlspecialchars($data['nama_lengkap'] ?? '', ENT_QUOTES);
                                         $tempat_aman = htmlspecialchars($data['tempat_lahir'] ?? '', ENT_QUOTES);
@@ -135,10 +148,19 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                                         $wa_aman = htmlspecialchars($data['no_wa_ortu'] ?? '', ENT_QUOTES);
                                         $capaian_aman = htmlspecialchars($data['capaian_hafalan'] ?? '', ENT_QUOTES);
                                         $catatan_aman = htmlspecialchars($data['catatan_pengajar'] ?? '', ENT_QUOTES);
+                                        
+                                        // Variabel foto (Jika kosong, gunakan default.png)
+                                        $foto_db = !empty($data['foto']) ? htmlspecialchars($data['foto'], ENT_QUOTES) : 'default.png';
+                                        $path_foto = "../../uploads/" . $foto_db; // Sesuaikan path folder uploadmu
                                     ?>
                                     <tr>
                                         <td><strong style="color: #0f172a"><?= $no++ ?></strong></td>
-                                        <td><strong style="color: #0f172a"><?= $nama_aman ?></strong></td>
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                <img src="<?= $path_foto ?>" alt="Foto" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">
+                                                <strong style="color: #0f172a"><?= $nama_aman ?></strong>
+                                            </div>
+                                        </td>
                                         <td><?= $capaian_aman ?></td>
                                         
                                         <td class="catatan-teks">
@@ -165,7 +187,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                                         
                                         <td align="center">
                                             <div class="grup-aksi">
-                                                <!-- Tombol Info (Pake Data-Attribute, Anti Error!) -->
+                                                <!-- Tombol Info (Tambah Data Foto) -->
                                                 <button type="button" class="aksi-info" title="Lihat Biodata Lengkap" 
                                                         data-nama="<?= $nama_aman ?>"
                                                         data-tempat="<?= $tempat_aman ?>"
@@ -173,11 +195,12 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                                                         data-alamat="<?= $alamat_aman ?>"
                                                         data-ortu="<?= $ortu_aman ?>"
                                                         data-wa="<?= $wa_aman ?>"
+                                                        data-foto="<?= $path_foto ?>"
                                                         onclick="lihatBiodata(this)">
                                                     <i class="fa-solid fa-address-card"></i>
                                                 </button>
 
-                                                <!-- Tombol Edit (Pake Data-Attribute, Anti Error!) -->
+                                                <!-- Tombol Edit -->
                                                 <button type="button" class="aksi-edit" title="Edit Data" 
                                                         data-id="<?= $id_aman ?>"
                                                         data-nama="<?= $nama_aman ?>"
@@ -220,6 +243,9 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                 <button class="close-btn" onclick="tutupModalBiodata()"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
+            <!-- Tambahan Area Foto di Modal -->
+            <img id="viewFoto" src="../../uploads/default.png" alt="Foto Santri" class="foto-profil-santri">
+            
             <div style="background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 12px; border: 1px solid #f1f5f9;">
                 <label style="display: block; color: #94a3b8; font-size: 11px; text-transform: uppercase; font-weight: 700; margin-bottom: 5px;">Nama Lengkap</label>
                 <p id="viewNama" style="font-size: 15px; font-weight: 600; color: #1e293b;">-</p>
@@ -247,7 +273,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
         </div>
     </div>
     
-    <!-- MODAL TAMBAH/EDIT SANTRI -->
+    <!-- MODAL TAMBAH/EDIT SANTRI (Ditambah enctype multipart/form-data) -->
     <div id="modalTambahSantri" class="modal-overlay">
         <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
             <div class="modal-header">
@@ -255,9 +281,16 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                 <button class="close-btn" onclick="tutupModalForm()"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
-            <form action="simpan_santri.php" method="POST">
+            <!-- TAMBAH ENCTYPE UNTUK UPLOAD FILE -->
+            <form action="simpan_santri.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id_santri" id="inputIdSantri">
                 
+                <div class="grup-form-modal">
+                    <label>Foto Profil (Opsional)</label>
+                    <input type="file" name="foto" id="inputFoto" accept="image/png, image/jpeg, image/jpg" style="padding: 10px; border: 1px solid #ccc; width: 100%; border-radius: 8px;">
+                    <small style="color: #64748b;">Abaikan jika tidak ingin mengubah foto. Maks 2MB.</small>
+                </div>
+
                 <div class="grup-form-modal">
                     <label>Nama Lengkap</label>
                     <input type="text" name="nama" id="inputNama" placeholder="Masukkan nama santri..." required>
@@ -266,7 +299,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div class="grup-form-modal">
                         <label>Tempat Lahir</label>
-                        <input type="text" name="tempat_lahir" id="inputTempatLahir" placeholder="Contoh: Makassar">
+                        <input type="text" name="tempat_lahir" id="inputTempatLahir" placeholder="Contoh: Masohi">
                     </div>
                     <div class="grup-form-modal">
                         <label>Tanggal Lahir</label>
@@ -287,7 +320,6 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                     
                     <div class="grup-form-modal">
                         <label>No. WhatsApp Orang Tua</label>
-                        <!-- Form yang benar untuk WA -->
                         <input type="text" name="no_wa_ortu" id="inputWaOrtu" placeholder="Contoh: 081234567890">
                     </div>
                 </div>
@@ -308,7 +340,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
         </div>
     </div>
 
-    <!-- Script Internal agar Anti-Cache & Anti-Macet -->
+    <!-- Script Internal -->
     <script>
         function bukaModalTambah() {
             document.getElementById('judulModal').innerText = "Tambah Santri Baru";
@@ -323,6 +355,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
             document.getElementById('inputWaOrtu').value = "";
             document.getElementById('inputCapaian').value = "";
             document.getElementById('inputCatatan').value = "";
+            document.getElementById('inputFoto').value = ""; // Reset input file
             
             document.getElementById('modalTambahSantri').classList.add('show');
         }
@@ -340,6 +373,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
             document.getElementById('inputWaOrtu').value = btn.getAttribute('data-wa');
             document.getElementById('inputCapaian').value = btn.getAttribute('data-capaian');
             document.getElementById('inputCatatan').value = btn.getAttribute('data-catatan');
+            document.getElementById('inputFoto').value = ""; // Reset input file supaya tidak wajib diisi
             
             document.getElementById('modalTambahSantri').classList.add('show');
         }
@@ -349,6 +383,10 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
         }
 
         function lihatBiodata(btn) {
+            // Set foto
+            let fotoSrc = btn.getAttribute('data-foto');
+            document.getElementById('viewFoto').src = fotoSrc;
+
             document.getElementById('viewNama').innerText = btn.getAttribute('data-nama') || '-';
             
             let tempat = btn.getAttribute('data-tempat');
@@ -368,7 +406,6 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
             document.getElementById('modalBiodata').classList.remove('show');
         }
 
-        // Tutup modal jika klik di luar kotak
         window.onclick = function(event) {
             let modals = document.querySelectorAll('.modal-overlay');
             modals.forEach(function(modal) {
@@ -395,14 +432,14 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
             .then(response => response.text())
             .then(data => {
                 if (data.trim() === "Berhasil diupdate") {
-                    console.log("Status berhasil disimpan ke database!");
+                    console.log("Status berhasil disimpan!");
                 } else {
                     console.error("Gagal: " + data);
                 }
             })
             .catch(error => {
                 console.error("Kesalahan koneksi:", error);
-                alert("Terjadi kesalahan jaringan, status gagal disimpan!");
+                alert("Terjadi kesalahan jaringan!");
             });
         }
 
@@ -421,7 +458,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
         }
     </script>
 
-    <!-- Sweet Alert PHP Handle -->
+    <!-- Sweet Alert -->
     <?php if (isset($_GET['status'])): ?>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -437,7 +474,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                 <?php unset($_SESSION['alert_message']); ?>
                 <?php endif; ?>
             });
-        </script>
+        </script> 
     <?php endif; ?>
 </body>
 </html>

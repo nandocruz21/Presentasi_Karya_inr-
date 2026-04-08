@@ -19,7 +19,7 @@ $query_info = mysqli_query($koneksi, "SELECT * FROM informasi ORDER BY tanggal_p
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link rel="icon" type="image/png" href="../../images/lg.jpeg">
     <link rel="stylesheet" href="../style/admin_info.css" />
     <link
       rel="stylesheet"
