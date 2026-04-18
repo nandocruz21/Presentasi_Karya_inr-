@@ -81,7 +81,7 @@ $q_galeri = mysqli_query($koneksi, "SELECT * FROM galeri ORDER BY id_galeri DESC
     </section>
 
     <!-- TEMPAT SAMBUTAN -->
-    <section class="sambutan" id="sambutan">
+    <section class="sambutan scroll-animasi " id="sambutan">
       <div class="container-sambutan">
         <div class="sambutan-main">
           <h1>SAMBUTAN KEPALA TPQ</h1>
@@ -115,7 +115,7 @@ $q_galeri = mysqli_query($koneksi, "SELECT * FROM galeri ORDER BY id_galeri DESC
 
     <!-- SECTION TENTANG (GRID) -->
     <section class="kedua" id="tentang">
-      <div class="utama1">
+      <div class="utama1 scroll-animasi ">
         <div class="container">
           <!-- Sisi Kiri: Deskripsi Utama -->
           <div class="grid-item utama">
@@ -208,7 +208,7 @@ $q_galeri = mysqli_query($koneksi, "SELECT * FROM galeri ORDER BY id_galeri DESC
         <h1>Papan Informasi</h1>
         <p>Pengumuman dan informasi terbaru di TPQ <?= htmlspecialchars($dt_atur['nama_tpq']) ?>.</p>
       </div>
-      <div class="bungkus">
+      <div class="bungkus scroll-animasi">
         
         <!-- Mengecek apakah ada pengumuman di database -->
         <?php if ($dt_info): ?>
@@ -321,7 +321,7 @@ $q_galeri = mysqli_query($koneksi, "SELECT * FROM galeri ORDER BY id_galeri DESC
     </section>
 
     <!-- SECTION LOKASI -->
-    <section class="kelima">
+    <section class="kelima scroll-animasi">
       <div class="Utama4">
         <h1>LOKASI</h1>
       </div>

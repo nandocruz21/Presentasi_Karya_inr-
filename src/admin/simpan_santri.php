@@ -85,17 +85,15 @@ if ($id == "") {
 if (mysqli_query($koneksi, $query)) {
     
     // --- 1. PROSES REKAM RIWAYAT (TIMELINE) ---
-    $id_log = ($id == "") ? mysqli_insert_id($koneksi) : $id;
-
-    $q_status = mysqli_query($koneksi, "SELECT kehadiran FROM santri WHERE id_santri='$id_log'");
-    $dt_status = mysqli_fetch_assoc($q_status);
-    $status_saat_ini = $dt_status['kehadiran'] ?? 'hadir';
-
-    $query_riwayat = "INSERT INTO riwayat_progres (id_santri, capaian_hafalan, catatan_pengajar, kehadiran) 
-                      VALUES ('$id_log', '$capaian', '$catatan', '$status_saat_ini')";
-    mysqli_query($koneksi, $query_riwayat);
-
-    // FITUR WA TELAH DIHAPUS DARI SINI SESUAI PERMINTAAN
+    // Logika Final: 
+    // JIKA $id == "" (Artinya Admin sedang Menambah Santri Baru), buatkan riwayat pertamanya.
+    // JIKA $id ada isinya (Artinya Admin cuma klik Edit/Pensil), JANGAN NGAPA-NGAPAIN!
+    if ($id == "") {
+        $id_log = mysqli_insert_id($koneksi);
+        $query_riwayat = "INSERT INTO riwayat_progres (id_santri, capaian_hafalan, catatan_pengajar, kehadiran) 
+                          VALUES ('$id_log', '$capaian', '$catatan', 'hadir')";
+        mysqli_query($koneksi, $query_riwayat);
+    }
 
     // SELESAI!
     $_SESSION['alert_type'] = 'success';

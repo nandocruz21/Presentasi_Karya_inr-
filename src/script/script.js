@@ -115,4 +115,25 @@
           galeriContainer.addEventListener('touchend', () => isHovered = false);
         }
       });
+
+      document.addEventListener("DOMContentLoaded", function() {
+       const observerOptions = {
+        threshold: 0.2 // Animasi jalan jika 20% elemen sudah masuk layar
+       };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("muncul");
+          } else {
+            // Baris ini akan menghapus class saat elemen keluar dari layar
+            entry.target.classList.remove("muncul"); 
+          }
+        });
+      }, observerOptions);
+
+      // Cari semua elemen yang ingin diberi animasi
+      const elements = document.querySelectorAll(".scroll-animasi");
+        elements.forEach((el) => observer.observe(el));
+      });
     

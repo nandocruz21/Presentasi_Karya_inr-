@@ -152,9 +152,9 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
     </div>
 
     <script>
-      // =========================================================
+      
       // DATA SANTRI AKTIF (untuk PDF)
-      // =========================================================
+      
       let dataSantriAktif = {
         nama: '',
         tempatLahir: '',
@@ -166,10 +166,11 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
       // Nama TPQ dari PHP
       const namaTpq = <?= json_encode(strtoupper(htmlspecialchars($nama_tpq))) ?>;
       const tanggalCetak = <?= json_encode(date('d F Y')) ?>;
+      const logoBase64 = '../../images/logo.png';
 
-      // =========================================================
+      
       // FILTER PENCARIAN
-      // =========================================================
+      
       function filterSantri() {
         let input = document.getElementById('searchInput').value.toLowerCase();
         let cards = document.getElementsByClassName('santri-item');
@@ -206,9 +207,9 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
           return d.getDate() + ' ' + bulan[d.getMonth()] + ' ' + d.getFullYear();
       }
 
-      // =========================================================
+      
       // LIHAT RIWAYAT
-      // =========================================================
+      
       function lihatRiwayat(idSantri, namaSantri, tempatLahir, tglLahir, namaOrtu) {
           dataSantriAktif = { nama: namaSantri, tempatLahir: tempatLahir, tglLahir: tglLahir, namaOrtu: namaOrtu, riwayat: [] };
 
@@ -260,11 +261,11 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
           });
       }
 
-      // =========================================================
+      
       // FUNGSI DOWNLOAD RAPOR PDF (menggunakan jsPDF + autoTable)
       // Solusi ini 100% bebas terpotong karena dikerjakan di level
       // JavaScript murni — tidak bergantung pada render HTML ke canvas
-      // =========================================================
+      
       function unduhRaporPDF() {
           const btn = document.getElementById('btnUnduhPDF');
           btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memproses...';
@@ -282,22 +283,35 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
 
               let posY = marginAtas;
 
-              // ---------- KOP SURAT ----------
+              // ---------- KOP SURAT DENGAN LOGO ----------
+              const logoUkuran = 35; // mm
+              const kopTinggi  = 34;
+
+              // Gambar logo di sisi kiri
+              const logoX = marginKiri + 10;
+              const logoY = posY + (kopTinggi - logoUkuran);
+              doc.addImage(logoBase64, 'PNG', logoX, logoY, logoUkuran, logoUkuran);
+
+              // Teks kop rata tengah di sisi kanan logo
+              const teksKopX = lebarKertas / 2 + 8;
+              const tengahKop = posY + kopTinggi / 2;
+
               doc.setFont('times', 'bold');
-              doc.setFontSize(18);
-              doc.setTextColor(6, 78, 59); // hijau tua
-              doc.text('TPQ ' + namaTpq, lebarKertas / 2, posY + 8, { align: 'center' });
+              doc.setFontSize(20);
+              doc.setTextColor(6, 78, 59);
+              doc.text('TPQ ' + namaTpq, teksKopX, tengahKop - 7, { align: 'center' });
 
               doc.setFont('times', 'normal');
               doc.setFontSize(11);
-              doc.setTextColor(50, 50, 50);
-              doc.text('Pusat Pembelajaran Al-Quran dan Ilmu Agama Islam', lebarKertas / 2, posY + 16, { align: 'center' });
+              doc.setTextColor(0, 0, 0);
+              doc.text('Pembelajaran Al-Quran dan Ilmu Agama Islam', teksKopX, tengahKop + 1, { align: 'center' });
+
               doc.setFontSize(9);
               doc.setTextColor(100, 100, 100);
-              doc.text('Cetak Dokumen Otomatis Sistem MSANTRI', lebarKertas / 2, posY + 22, { align: 'center' });
+              doc.text('Cetak Dokumen Otomatis Sistem MSANTRI', teksKopX, tengahKop + 8, { align: 'center' });
 
               // Garis bawah kop
-              posY += 28;
+              posY += kopTinggi + 3;
               doc.setDrawColor(0, 0, 0);
               doc.setLineWidth(0.8);
               doc.line(marginKiri, posY, lebarKertas - marginKanan, posY);
@@ -377,7 +391,7 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
                       0: { cellWidth: colWidths[0], halign: 'center', valign: 'middle' },
                       1: { cellWidth: colWidths[1], halign: 'center', valign: 'middle' },
                       2: { cellWidth: colWidths[2], halign: 'center', valign: 'middle' },
-                      3: { cellWidth: colWidths[3], valign: 'top' },
+                      3: { cellWidth: colWidths[3], valign: 'center', valign: 'middle' },
                       4: { cellWidth: colWidths[4], valign: 'top' }
                   },
                   headStyles: {
@@ -453,7 +467,7 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
               doc.text('Pengajar / Ustadzah', xKanan + lebar / 2, finalY + 6, { align: 'center' });
               // Garis tanda tangan kanan
               doc.line(xKanan + 5, finalY + 38, xKanan + lebar - 5, finalY + 38);
-              doc.text('(                              )', xKanan + lebar / 2, finalY + 43, { align: 'center' });
+              doc.text('(Nurjannah)', xKanan + lebar / 2, finalY + 43, { align: 'center' });
 
               // ---------- SIMPAN PDF ----------
               const namaFile = 'Rapor_Santri_' + dataSantriAktif.nama.replace(/\s+/g, '_') + '.pdf';
@@ -468,101 +482,5 @@ $nama_tpq = (is_array($dt_atur) && !empty($dt_atur['nama_tpq'])) ? $dt_atur['nam
           btn.disabled = false;
       }
     </script>
-    
-    <style>
-    /* ================= CSS DESAIN WEB UTAMA ================= */
-    * { padding: 0; margin: 0; box-sizing: border-box; }
-    body { font-family: "Poppins", Helvetica, sans-serif; color: #475569; background-color: #f4fbf9; min-height: 100vh; display: flex; flex-direction: column; background-image: radial-gradient( circle at 15% 50%, rgba(14, 165, 233, 0.08), transparent 30% ); }
-    header { padding: 20px 50px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
-    .logo { font-weight: 800; font-size: 26px; color: #064e3b; letter-spacing: 1.5px; display: flex; align-items: center; gap: 10px; }
-    .logo img { width: 40px; }
-    .logo span { color: #000000; }
-    .btn-back { display: flex; align-items: center; gap: 8px; color: #64748b; text-decoration: none; font-weight: 600; transition: 0.3s; padding: 10px 20px; border-radius: 50px; }
-    .btn-back:hover { color: #059669; transform: translateY(-3px) }
-    .search-container { flex-grow: 1; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; max-width: 850px; margin: 0 auto; width: 100%; }
-    .search-header { text-align: center; margin-bottom: 40px; }
-    .search-header h1 { font-family: "Amiri", serif; font-size: 46px; margin-bottom: 15px; color: #000000; }
-    .search-header p { color: #64748b; font-size: 17px; max-width: 600px; margin: 0 auto; line-height: 1.6; }
-    .search-box { width: 100%; position: relative; margin-bottom: 50px; }
-    .search-box input { width: 100%; padding: 22px 30px 22px 70px; border-radius: 50px; border: 2px solid #ffffff; font-family: "Poppins", sans-serif; font-size: 18px; color: #064e3b; outline: none; background: #ffffff; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04); transition: 0.4s; }
-    .search-box input:focus { border-color: #10b981; box-shadow: 0 20px 50px rgba(16, 185, 129, 0.15); transform: translateY(-2px); }
-    .search-box i { position: absolute; left: 30px; top: 50%; transform: translateY(-50%); font-size: 22px; color: #10b981; }
-    .results-area { width: 100%; display: flex; flex-direction: column; gap: 20px; }
-    
-    .student-card { background: #ffffff; border-radius: 20px; padding: 25px 30px; border: 1px solid rgba(226, 232, 240, 0.8); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03); display: flex; flex-direction: row; justify-content: space-between; align-items: center; transition: 0.3s; animation: slideUp 0.5s ease-out; position: relative; overflow: hidden; gap: 20px; }
-    .student-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, #10b981, #059669); opacity: 0; transition: 0.4s; }
-    .student-card:hover { transform: translateY(-5px); border-color: #a7f3d0; box-shadow: 0 20px 40px rgba(16, 185, 129, 0.08); }
-    .student-card:hover::before { opacity: 1; }
-    .student-info { display: flex; align-items: center; gap: 20px; flex: 1; min-width: 0; }
-    .student-avatar { width: 65px; height: 65px; border-radius: 50%; background: #f1f5f9; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); flex-shrink: 0; overflow: hidden; text-align: center; }
-    .student-avatar img { width: 100%; height: 100%; object-fit: cover; font-size: 10px; color: #94a3b8; }
-    .student-details { display: flex; flex-direction: column; justify-content: center; flex: 1; min-width: 0; }
-    .student-details h3 { font-size: 20px; color: #064e3b; margin-bottom: 2px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .student-details p { font-size: 13px; color: #64748b; display: flex; align-items: center; gap: 6px; font-weight: 500; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .catatan-guru { font-size: 13px; color: #475569; background: #f0fdf4; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #10b981; display: inline-block; word-wrap: break-word; white-space: normal; line-height: 1.5; }
-    .student-progress { display: flex; flex-direction: column; align-items: flex-end; min-width: 180px; flex-shrink: 0; }
-    .progress-label { font-size: 11px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
-    .progress-value { font-family: "Amiri", serif; font-size: 22px; font-weight: 700; color: #059669; margin-bottom: 8px; text-align: right; }
-    .progress-label, .progress-value, .badge, .waktu-update { white-space: nowrap; }
-    .waktu-update { font-size: 11px; color: #64748b; font-weight: 600; margin-bottom: 8px; background: #f1f5f9; padding: 4px 10px; border-radius: 6px; display: inline-flex; align-items: center; }
-    .waktu-update i { color: #10b981; margin-right: 4px; }
-    .badge-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
-    .btn-riwayat { background: #f1f5f9; color: #0284c7; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 50px; font-size: 11px; font-weight: 700; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; gap: 5px; font-family: "Poppins"; outline: none; }
-    .btn-riwayat:hover { background: #e0f2fe; border-color: #bae6fd; }
-    .badge { padding: 6px 12px; border-radius: 50px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 5px; }
-    .badge.hadir { background: #d1fae5; color: #059669; border: 1px solid #a7f3d0; }
-    .badge.izin { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
-    .badge.alpha { background: #fee2e2; color: #e11d48; border: 1px solid #fecaca; }
-    .badge.sakit { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; }
-    .empty-state { text-align: center; padding: 60px 20px; color: #94a3b8; display: none; animation: slideUp 0.4s; }
-    .empty-state i { font-size: 60px; margin-bottom: 20px; color: #cbd5e1; }
-    .empty-state h3 { color: #064e3b; margin-bottom: 8px; font-size: 22px; }
-
-    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-    @media (max-width: 768px) {
-      header { padding: 15px 20px; }
-      .logo { font-size: 20px; }
-      .btn-back span { display: none; }
-      .btn-back { padding: 10px; border-radius: 50%; }
-      .search-header h1 { font-size: 32px; }
-      .search-box input { font-size: 16px; padding-left: 60px; }
-      .student-card { flex-direction: column; align-items: flex-start; padding: 20px; gap: 20px; }
-      .student-info { width: 100%; align-items: flex-start; }
-      .student-progress { width: 100%; align-items: flex-start; border-top: 1px solid #f1f5f9; padding-top: 15px; }
-      .badge-group { flex-direction: row-reverse; width: 100%; justify-content: flex-end; }
-    }
-
-    /* ================= MODAL TIMELINE RIWAYAT ================= */
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 2000; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; }
-    .modal-overlay.show { display: flex; opacity: 1; }
-    .modal-content { background: #ffffff; width: 90%; max-width: 550px; max-height: 85vh; border-radius: 24px; padding: 30px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15); transform: translateY(-30px); transition: 0.3s; display: flex; flex-direction: column; }
-    .modal-overlay.show .modal-content { transform: translateY(0); }
-    .modal-header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9; margin-bottom: 20px; }
-    .modal-header h2 { font-family: "Amiri", serif; font-size: 24px; color: #0f172a; }
-    .modal-header p { font-size: 13px; color: #10b981; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-    .btn-unduh-pdf { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-family: "Poppins", sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.3s; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2); }
-    .btn-unduh-pdf:hover:not(:disabled) { background: #dc2626; box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3); transform: translateY(-2px); }
-    .btn-unduh-pdf:disabled { opacity: 0.7; cursor: not-allowed; }
-    .btn-close { background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; transition: 0.3s; margin-left: 10px; }
-    .btn-close:hover { color: #0f172a; }
-    .modal-body { overflow-y: auto; padding-right: 10px; flex: 1; }
-    .modal-body::-webkit-scrollbar { width: 6px; }
-    .modal-body::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
-    
-    .timeline { border-left: 3px solid #e2e8f0; margin: 10px 0 10px 15px; padding-left: 25px; position: relative; }
-    .timeline-item { margin-bottom: 25px; position: relative; }
-    .timeline-item:last-child { margin-bottom: 0; }
-    .timeline-item::before { content: ""; position: absolute; left: -34px; top: 0; width: 14px; height: 14px; border-radius: 50%; background: #10b981; border: 3px solid #ffffff; box-shadow: 0 0 0 2px #e2e8f0; }
-    .time-date { font-size: 12px; color: #64748b; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
-    .time-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 16px; }
-    .time-box h4 { font-size: 16px; color: #0f172a; margin-bottom: 5px; font-family: "Amiri", serif; }
-    .time-box p { font-size: 13px; color: #475569; }
-    .status-label { font-size: 10px; padding: 3px 8px; border-radius: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-bottom: 8px; }
-    .s-hadir { background: #d1fae5; color: #059669; }
-    .s-izin { background: #fef3c7; color: #d97706; }
-    .s-sakit { background: #e0f2fe; color: #0284c7; }
-    .s-alpha { background: #fee2e2; color: #e11d48; }
-    </style>
   </body>
 </html>

@@ -336,7 +336,7 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
                     <button type="button" class="btn-batal" onclick="tutupModalForm()">Batal</button>
                     <button type="submit" class="btn-simpan"><i class="fa-solid fa-floppy-disk"></i> <span id="teksTombol">Simpan Data</span></button>
                 </div>
-            </form>
+            </form> 
         </div>
     </div>
 
