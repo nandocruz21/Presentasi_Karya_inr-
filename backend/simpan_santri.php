@@ -13,22 +13,49 @@ if (empty($tanggal_lahir_raw)) {
 }
 
 // ========== AMBIL DATA DARI FORM ==========
-$id      = isset($_POST['id_santri']) ? $_POST['id_santri'] : '';
-$nama    = mysqli_real_escape_string($koneksi, $_POST['nama'] ?? '');
-$capaian = mysqli_real_escape_string($koneksi, $_POST['capaian'] ?? '');
-$catatan = mysqli_real_escape_string($koneksi, $_POST['catatan'] ?? '');
+$id      = isset($_POST['id_santri']) ? trim($_POST['id_santri']) : '';
+$nama    = mysqli_real_escape_string($koneksi, trim($_POST['nama'] ?? ''));
+$capaian = mysqli_real_escape_string($koneksi, trim($_POST['capaian'] ?? ''));
+$catatan_raw = trim($_POST['catatan'] ?? '');
+if (empty($catatan_raw)) $catatan_raw = "- Belum ada catatan -";
+$catatan = mysqli_real_escape_string($koneksi, $catatan_raw);
 
-$tempat_lahir  = mysqli_real_escape_string($koneksi, $_POST['tempat_lahir'] ?? '');
-$alamat        = mysqli_real_escape_string($koneksi, $_POST['alamat'] ?? '');
-$nama_ortu     = mysqli_real_escape_string($koneksi, $_POST['nama_ortu'] ?? '');
-$no_wa_ortu    = mysqli_real_escape_string($koneksi, $_POST['no_wa_ortu'] ?? '');
+$tempat_lahir  = mysqli_real_escape_string($koneksi, trim($_POST['tempat_lahir'] ?? ''));
+$alamat        = mysqli_real_escape_string($koneksi, trim($_POST['alamat'] ?? ''));
+$nama_ortu     = mysqli_real_escape_string($koneksi, trim($_POST['nama_ortu'] ?? ''));
+$no_wa_ortu    = mysqli_real_escape_string($koneksi, trim($_POST['no_wa_ortu'] ?? ''));
 
 // Set default value untuk field kosong
 if (empty($tempat_lahir)) $tempat_lahir = "-";
 if (empty($alamat)) $alamat = "-";
 if (empty($nama_ortu)) $nama_ortu = "-";
 if (empty($no_wa_ortu)) $no_wa_ortu = "-"; 
-if (empty($catatan)) $catatan = "- Belum ada catatan -";
+
+// ========== DETEKSI PERUBAHAN UNTUK RIWAYAT (HANYA UPDATE) ==========
+$buat_riwayat_baru = false;
+$kehadiran_lama = 'hadir';
+
+if ($id != "") {
+    $id_safe = mysqli_real_escape_string($koneksi, $id);
+    $query_lama = mysqli_query($koneksi, "SELECT capaian_hafalan, catatan_pengajar, kehadiran FROM santri WHERE id_santri = '$id_safe'");
+    if ($query_lama && mysqli_num_rows($query_lama) > 0) {
+        $data_lama = mysqli_fetch_assoc($query_lama);
+        $kehadiran_lama = $data_lama['kehadiran'];
+        
+        // Bersihkan data lama
+        $capaian_lama = trim(htmlspecialchars_decode(stripslashes($data_lama['capaian_hafalan'] ?? '')));
+        $catatan_lama = trim(htmlspecialchars_decode(stripslashes($data_lama['catatan_pengajar'] ?? '')));
+        
+        // Bersihkan data baru (dari form)
+        $capaian_baru = trim(htmlspecialchars_decode(stripslashes($_POST['capaian'] ?? '')));
+        $catatan_baru = trim(htmlspecialchars_decode(stripslashes($_POST['catatan'] ?? '')));
+        if (empty($catatan_baru)) $catatan_baru = "- Belum ada catatan -";
+        
+        if ($capaian_lama !== $capaian_baru || $catatan_lama !== $catatan_baru) {
+            $buat_riwayat_baru = true;
+        }
+    }
+}
 
 // ========== KONFIGURASI UPLOAD FOTO ==========
 $nama_file_foto = ""; 
@@ -74,10 +101,10 @@ if ($id == "") {
     // UPDATE DATA LAMA
     if(!empty($nama_file_foto)){
         $query = "UPDATE santri SET 
-                  nama_lengkap = '$nama', tempat_lahir = '$tempat_lahir', tanggal_lahir = $tanggal_lahir, alamat = '$alamat', nama_ortu = '$nama_ortu', no_wa_ortu = '$no_wa_ortu', capaian_hafalan = '$capaian', catatan_pengajar = '$catatan', foto = '$nama_file_foto' WHERE id_santri = '$id'";
+                  nama_lengkap = '$nama', tempat_lahir = '$tempat_lahir', tanggal_lahir = $tanggal_lahir, alamat = '$alamat', nama_ortu = '$nama_ortu', no_wa_ortu = '$no_wa_ortu', capaian_hafalan = '$capaian', catatan_pengajar = '$catatan', foto = '$nama_file_foto' WHERE id_santri = '$id_safe'";
     } else {
         $query = "UPDATE santri SET 
-                  nama_lengkap = '$nama', tempat_lahir = '$tempat_lahir', tanggal_lahir = $tanggal_lahir, alamat = '$alamat', nama_ortu = '$nama_ortu', no_wa_ortu = '$no_wa_ortu', capaian_hafalan = '$capaian', catatan_pengajar = '$catatan' WHERE id_santri = '$id'";
+                  nama_lengkap = '$nama', tempat_lahir = '$tempat_lahir', tanggal_lahir = $tanggal_lahir, alamat = '$alamat', nama_ortu = '$nama_ortu', no_wa_ortu = '$no_wa_ortu', capaian_hafalan = '$capaian', catatan_pengajar = '$catatan' WHERE id_santri = '$id_safe'";
     }
 }
 
@@ -86,10 +113,18 @@ if (mysqli_query($koneksi, $query)) {
     
     // --- 1. PROSES REKAM RIWAYAT (TIMELINE) ---
     if ($id == "") {
+        // Jika tambah data baru, selalu buat riwayat awal
         $id_log = mysqli_insert_id($koneksi);
         $query_riwayat = "INSERT INTO riwayat_progres (id_santri, capaian_hafalan, catatan_pengajar, kehadiran) 
                           VALUES ('$id_log', '$capaian', '$catatan', 'hadir')";
         mysqli_query($koneksi, $query_riwayat);
+    } else {
+        // Jika edit data, hanya buat riwayat jika ada perubahan pada capaian atau catatan
+        if ($buat_riwayat_baru) {
+            $query_riwayat = "INSERT INTO riwayat_progres (id_santri, capaian_hafalan, catatan_pengajar, kehadiran) 
+                              VALUES ('$id_safe', '$capaian', '$catatan', '$kehadiran_lama')";
+            mysqli_query($koneksi, $query_riwayat);
+        }
     }
 
     // SELESAI!
