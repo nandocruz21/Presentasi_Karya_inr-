@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 session_start();
 
 // 1. Proteksi Halaman
@@ -65,6 +65,10 @@ $data_atur = mysqli_fetch_assoc($query_atur);
           <i class="fa-regular fa-calendar-check"></i>
           <span>Jadwal &amp; Lokasi</span>
         </a>
+        <a href="input_testimoni.php" class="ini-nav">
+          <i class="fa-solid fa-comments"></i>
+          <span>Testimoni</span>
+        </a>
       </div>
 
       <div class="sidebar-footer">
@@ -81,11 +85,17 @@ $data_atur = mysqli_fetch_assoc($query_atur);
     </aside>
 
     <!-- KONTEN UTAMA -->
-    <main class="main-content">
-      <!-- Tombol Hamburger (Khusus HP) -->
-      <button class="btn-hamburger" onclick="toggleSidebar()">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+        <main class="main-content">
+        <!-- MOBILE HEADER -->
+        <div class="mobile-header">
+            <button class="btn-hamburger" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="mobile-logo">
+                <img src="../public/img/logo.png" alt="Logo">
+                <span>MSANTRI</span>
+            </div>
+        </div>
 
       <div class="header-content">
         <h1>Jadwal &amp; Lokasi TPQ</h1>
@@ -175,3 +185,5 @@ $data_atur = mysqli_fetch_assoc($query_atur);
     <script src="../public/js/admin-info.js"></script> 
   </body>
 </html>
+
+

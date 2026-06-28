@@ -5,7 +5,7 @@ if(!isset($_SESSION["isLoggin"]) || $_SESSION["isLoggin"]!="login"){
   header("Location:login.php");
   exit;
 }
-$query_info = mysqli_query($koneksi, "SELECT * FROM informasi ORDER BY tanggal_posting DESC, id_info DESC");
+$query_testi = mysqli_query($koneksi, "SELECT * FROM testimoni ORDER BY id_testi DESC");
 ?>
 
 <!doctype html>
@@ -13,9 +13,9 @@ $query_info = mysqli_query($koneksi, "SELECT * FROM informasi ORDER BY tanggal_p
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Informasi - MSANTRI</title>
+    <title>Testimoni - MSANTRI</title>
     
-    <!-- IMPORT GOOGLE FONTS: POPPINS & AMIRI -->
+    <!-- IMPORT GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -27,12 +27,11 @@ $query_info = mysqli_query($koneksi, "SELECT * FROM informasi ORDER BY tanggal_p
     />
   </head>
   <body>
-    <!-- SIDEBAR BARU -->
+    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-header">
         <img src="../public/img/logo.png" alt="Logo" width="40px" />
         <p>MSANTRI</p>
-        <!-- Tombol Close Sidebar (Khusus HP) -->
         <button class="btn-close-sidebar" onclick="toggleSidebar()">
           <i class="fa-solid fa-xmark"></i>
         </button>
@@ -48,8 +47,7 @@ $query_info = mysqli_query($koneksi, "SELECT * FROM informasi ORDER BY tanggal_p
           <i class="fa-solid fa-book-open-reader"></i>
           <span>Progres Santri</span>
         </a>
-        <!-- Class active dipindah ke halaman Informasi -->
-        <a href="admin_info.php" class="ini-nav active">
+        <a href="admin_info.php" class="ini-nav">
           <i class="fa-solid fa-bullhorn"></i>
           <span>Informasi</span>
         </a>
@@ -61,7 +59,7 @@ $query_info = mysqli_query($koneksi, "SELECT * FROM informasi ORDER BY tanggal_p
           <i class="fa-regular fa-calendar-check"></i>
           <span>Jadwal &amp; Lokasi</span>
         </a>
-        <a href="input_testimoni.php" class="ini-nav">
+        <a href="input_testimoni.php" class="ini-nav active">
           <i class="fa-solid fa-comments"></i>
           <span>Testimoni</span>
         </a>
@@ -81,21 +79,21 @@ $query_info = mysqli_query($koneksi, "SELECT * FROM informasi ORDER BY tanggal_p
     </aside>
 
     <!-- KONTEN UTAMA -->
-        <main class="main-content">
-        <!-- MOBILE HEADER -->
-        <div class="mobile-header">
-            <button class="btn-hamburger" onclick="toggleSidebar()">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <div class="mobile-logo">
-                <img src="../public/img/logo.png" alt="Logo">
-                <span>MSANTRI</span>
-            </div>
-        </div>
+    <main class="main-content">
+      <!-- MOBILE HEADER -->
+      <div class="mobile-header">
+          <button class="btn-hamburger" onclick="toggleSidebar()">
+              <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="mobile-logo">
+              <img src="../public/img/logo.png" alt="Logo">
+              <span>MSANTRI</span>
+          </div>
+      </div>
 
       <div class="header-content">
-        <h1>Papan Informasi</h1>
-        <p>Buat pengumuman baru dan lihat pratinjaunya tampil di halaman utama.</p>
+        <h1>Kelola Testimoni</h1>
+        <p>Tambahkan ulasan dari orang tua santri agar tampil di halaman depan.</p>
       </div>
 
       <div class="dashboard">
@@ -104,79 +102,71 @@ $query_info = mysqli_query($koneksi, "SELECT * FROM informasi ORDER BY tanggal_p
           <!-- Kotak Kiri (Form Input) -->
           <div class="card card-kiri">
             <div class="kepala-kotak">
-              <h3 class="judul-kotak">Posting Baru</h3>
+              <h3 class="judul-kotak">Tambah Testimoni</h3>
             </div>
 
-            <form action="../backend/simpan_info.php" method="POST">
-              <input type="hidden" name="id_info" id="inputIdInfo">
-
+            <form action="proses_tambah_testimoni.php" method="POST">
               <div class="grup-form">
-                <label>Judul Informasi</label>
-                <input
-                  type="text"
-                  name="judul"
-                  id="inputJudul"
-                  placeholder="Contoh: Libur Sampai Tanggal..."
-                  required
-                />
+                <label>Nama Wali Santri</label>
+                <input type="text" name="nama_wali" placeholder="Contoh: Bunda Aisyah" required />
               </div>
 
               <div class="grup-form">
-                <label>Isi Pesan / Keterangan</label>
-                <textarea
-                  rows="4"
-                  name="isi"
-                  id="inputIsi"
-                  placeholder="Tetap membaca dan menghafal di rumah..."
-                  required
-                ></textarea>
+                <label>Inisial Avatar</label>
+                <input type="text" name="inisial" placeholder="Contoh: B" maxlength="2" required />
               </div>
 
-              <button type="submit" class="tombol-tambah" id="btnSimpan">
-                <i class="fa-solid fa-paper-plane"></i> Terbitkan Sekarang
-              </button>
-              
-              <button type="button" class="tombol-tambah" id="btnBatalEdit" style="display:none; background: #94a3b8; margin-top: 10px;" onclick="batalEdit()">
-                <i class="fa-solid fa-xmark"></i> Batal Edit
+              <div class="grup-form">
+                <label>Rating (Bintang)</label>
+                <select name="rating" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px;">
+                    <option value="5">5 Bintang</option>
+                    <option value="4">4 Bintang</option>
+                    <option value="3">3 Bintang</option>
+                </select>
+              </div>
+
+              <div class="grup-form" style="margin-top: 15px;">
+                <label>Isi Ulasan</label>
+                <textarea rows="4" name="isi_testimoni" placeholder="Tuliskan ulasan..." required></textarea>
+              </div>
+
+              <button type="submit" name="simpan" class="tombol-tambah">
+                <i class="fa-solid fa-paper-plane"></i> Simpan Testimoni
               </button>
             </form>
           </div>
 
-          <!-- Kotak Kanan (Daftar Pengumuman) -->
+          <!-- Kotak Kanan (Daftar Testimoni) -->
           <div class="kolom-kanan">
             <div class="daftar-kartu">
 
-              <?php if(mysqli_num_rows($query_info) > 0): ?>
-                <?php while ($data = mysqli_fetch_assoc($query_info)) : ?>
-                  <div class="kartu-info">
+              <?php if($query_testi && mysqli_num_rows($query_testi) > 0): ?>
+                <?php while ($data = mysqli_fetch_assoc($query_testi)) : ?>
+                  <div class="kartu-info" style="border-left: 4px solid #10b981;">
                     <div class="tanggal-posting">
-                      <i class="fa-regular fa-calendar" style="margin-right: 5px"></i>
-                      <?= date('d M Y ', strtotime($data['tanggal_posting'])); ?>
+                      <i class="fa-solid fa-star" style="color: #fbbf24; margin-right: 5px"></i>
+                      Rating: <?= $data['rating'] ?>
                     </div>
 
                     <div class="aksi-pojok">
-                      <button class="btn-aksi btn-edit" title="Edit Info" onclick="editInfo('<?=$data['id_info']?>', '<?= addslashes($data['judul_info']) ?>', '<?= addslashes($data['isi_info']) ?>')">
-                        <i class="fa-solid fa-pen"></i>
-                      </button>
-                      <a href="../backend/hapus_info.php?id=<?= $data['id_info'] ?>" class="btn-aksi btn-hapus" title="Hapus Info" onclick="return confirm('Yakin ingin menghapus pengumuman ini?')" style="display: flex; text-decoration: none;">
+                      <a href="hapus_testimoni.php?id=<?= $data['id_testi'] ?>" class="btn-aksi btn-hapus" title="Hapus" onclick="return confirm('Yakin ingin menghapus testimoni ini?')" style="display: flex; text-decoration: none;">
                         <i class="fa-solid fa-trash"></i>
                       </a>
                     </div>
 
-                    <!-- Isi Kartu -->
-                    <div class="ikon-kartu"><i class="fa-solid fa-bullhorn"></i></div>
-                    <p class="teks-kategori"><?= htmlspecialchars($data['kategori'] ?? 'PENGUMUMAN') ?> </p>
+                    <div class="ikon-kartu" style="background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;"><?= htmlspecialchars(strtoupper($data['inisial'])) ?></div>
+                    <p class="teks-kategori">Wali Santri</p>
                     <h4 class="teks-judul">
-                      <?= htmlspecialchars($data['judul_info']) ?>
+                      <?= htmlspecialchars($data['nama_wali']) ?>
                     </h4>
                     <p class="teks-deskripsi">
-                      <?= nl2br(htmlspecialchars($data['isi_info'])) ?>
+                      "<?= nl2br(htmlspecialchars($data['isi_testimoni'])) ?>"
                     </p>
                   </div>
                 <?php endwhile; ?>
               <?php else: ?>  
                 <div class="kartu-info" style="border-color: #e2e8f0; background: #ffffff; box-shadow: none;">
-                  <p class="teks-deskripsi" style="text-align: center; color: #94a3b8;">Belum ada pengumuman yang diterbitkan.</p>
+                  <p class="teks-deskripsi" style="text-align: center; color: #94a3b8;">Belum ada testimoni.</p>
                 </div>
               <?php endif; ?>
 
@@ -190,5 +180,3 @@ $query_info = mysqli_query($koneksi, "SELECT * FROM informasi ORDER BY tanggal_p
     <script src="../public/js/admin-info.js"></script>
   </body>
 </html>
-
-

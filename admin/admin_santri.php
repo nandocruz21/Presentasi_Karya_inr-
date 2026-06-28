@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 session_start();
 
 // 1. Proteksi Halaman
@@ -82,6 +82,10 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
           <i class="fa-regular fa-calendar-check"></i>
           <span>Jadwal &amp; Lokasi</span>
         </a>
+        <a href="input_testimoni.php" class="ini-nav">
+          <i class="fa-solid fa-comments"></i>
+          <span>Testimoni</span>
+        </a>
       </div>
 
       <div class="sidebar-footer">
@@ -98,10 +102,17 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="main-content">
-        <button class="btn-hamburger" onclick="toggleSidebar()">
-            <i class="fa-solid fa-bars"></i>
-        </button>
+        <main class="main-content">
+        <!-- MOBILE HEADER -->
+        <div class="mobile-header">
+            <button class="btn-hamburger" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="mobile-logo">
+                <img src="../public/img/logo.png" alt="Logo">
+                <span>MSANTRI</span>
+            </div>
+        </div>
 
         <div class="header-content">
             <h1>Data &amp; Progres Santri</h1>
@@ -358,3 +369,5 @@ $query_santri = mysqli_query($koneksi, "SELECT * FROM santri ORDER BY id_santri 
     <?php endif; ?>
 </body>
 </html>
+
+

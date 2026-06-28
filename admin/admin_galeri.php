@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 session_start();
 include '../config/koneksi.php';
 
@@ -120,8 +120,12 @@ $query_galeri = mysqli_query($koneksi, "SELECT * FROM galeri ORDER BY id_galeri 
                 <span>Galeri</span>
             </a>
             <a href="admin_jadwal.php" class="ini-nav">
-                <i class="fa-regular fa-calendar-check"></i>
-                <span>Jadwal &amp; Lokasi</span>
+              <i class="fa-regular fa-calendar-check"></i>
+              <span>Jadwal &amp; Lokasi</span>
+            </a>
+            <a href="input_testimoni.php" class="ini-nav">
+              <i class="fa-solid fa-comments"></i>
+              <span>Testimoni</span>
             </a>
         </div>
 
@@ -139,10 +143,17 @@ $query_galeri = mysqli_query($koneksi, "SELECT * FROM galeri ORDER BY id_galeri 
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="main-content">
-        <button class="btn-hamburger" onclick="toggleSidebar()">
-            <i class="fa-solid fa-bars"></i>
-        </button>
+        <main class="main-content">
+        <!-- MOBILE HEADER -->
+        <div class="mobile-header">
+            <button class="btn-hamburger" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="mobile-logo">
+                <img src="../public/img/logo.png" alt="Logo">
+                <span>MSANTRI</span>
+            </div>
+        </div>
 
         <div class="header-content">
             <h1>Galeri Dokumentasi</h1>
@@ -220,3 +231,5 @@ $query_galeri = mysqli_query($koneksi, "SELECT * FROM galeri ORDER BY id_galeri 
     </script>
 </body>
 </html>
+
+

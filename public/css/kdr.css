@@ -584,3 +584,40 @@ header {
   background: #fee2e2;
   color: #e11d48;
 }
+
+/* PERBAIKAN RESPONSIVITAS KARTU SANTRI (HANYA HP) - SESUAI REQUEST */
+@media (max-width: 768px) {
+  /* 1. Posisi Catatan Pengajar Full ke Kiri */
+  .student-info {
+    flex-wrap: wrap; 
+  }
+  .student-details {
+    width: calc(100% - 85px); /* Avatar 65px + gap 20px = 85px */
+  }
+  .catatan-guru {
+    margin-left: -85px; /* Tarik ke kiri melewati avatar */
+    width: calc(100% + 85px); /* Lebarkan sepenuh kartu */
+    margin-top: 15px;
+    margin-bottom: 5px; /* Jarak bawah sebelum capaian terakhir */
+    display: block;
+    box-sizing: border-box;
+  }
+  
+  /* 2. Capaian Terakhir Wrap & Cegah Meluber Horizontal */
+  .student-progress {
+    min-width: 0 !important;
+  }
+  .progress-value {
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    overflow-wrap: anywhere !important; /* Hanya potong kata jika benar-benar melebihi kotak */
+    hyphens: auto;
+    width: 100%;
+    min-width: 0;
+    text-align: left !important;
+    line-height: 1.4;
+  }
+}
+
+
+

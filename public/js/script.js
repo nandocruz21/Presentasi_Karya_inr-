@@ -1,4 +1,4 @@
-     window.addEventListener("scroll", function () {
+      window.addEventListener("scroll", function () {
         const header = document.querySelector("header");
         header.classList.toggle("scrolled", window.scrollY > 50);
       });
@@ -69,52 +69,8 @@
 
     //SCRIPT AUTO SCROLL GALERI (MELINGKAR TANPA JEDA) 
     
-      document.addEventListener("DOMContentLoaded", function() {
-        const galeriContainer = document.querySelector('.gambar-utama');
-
-        // Pastikan galerinya ada dan memiliki isi foto
-        if(galeriContainer && galeriContainer.children.length > 0) {
-          
-          // Override CSS bawaan yang bisa membuat scroll tersendat
-          galeriContainer.style.scrollBehavior = 'auto';
-          galeriContainer.style.scrollSnapType = 'none';
-          
-          // Menggandakan (duplikat) isi galeri dan memasukkannya ke container
-          // Ini trik utama agar fotonya bisa terus menyambung ke foto pertama secara mulus
-          const galeriIsiAwal = galeriContainer.innerHTML;
-          galeriContainer.innerHTML += galeriIsiAwal; 
-          
-          let scrollSpeed = 1; // Kecepatan scroll (1 pixel per frame)
-          let isHovered = false;
-          let animationId;
-
-          // Fungsi yang dipanggil terus-menerus oleh browser sehalus 60 frame per detik
-          function autoScrollLoop() {
-            if (!isHovered) {
-              galeriContainer.scrollLeft += scrollSpeed;
-              
-              // Jika scroll sudah mencapai setengah dari lebar keseluruhan (yaitu panjang galeri awal),
-              // reset posisinya kembali ke 0 dengan seketika. Karena gambarnya duplikat, tidak akan ada lompatan visual.
-              if (galeriContainer.scrollLeft >= galeriContainer.scrollWidth / 2) {
-                galeriContainer.scrollLeft = 0;
-              }
-            }
-            // Ulangi animasi di frame berikutnya
-            animationId = requestAnimationFrame(autoScrollLoop);
-          }
-
-          // Memulai animasi melingkar
-          autoScrollLoop();
-
-          // Memberhentikan scroll sementara jika pengunjung mengarahkan mouse (PC)
-          galeriContainer.addEventListener('mouseenter', () => isHovered = true);
-          galeriContainer.addEventListener('mouseleave', () => isHovered = false);
-
-          // Memberhentikan scroll sementara jika pengunjung menahan/menyentuh layar (HP)
-          galeriContainer.addEventListener('touchstart', () => isHovered = true);
-          galeriContainer.addEventListener('touchend', () => isHovered = false);
-        }
-      });
+      // SCRIPT AUTO SCROLL GALERI (DIHAPUS)
+      // Karena Galeri sekarang menggunakan model CSS Grid Wall statis, script auto-scroll JS dimatikan agar tidak menduplikasi data foto.
 
       document.addEventListener("DOMContentLoaded", function() {
        const observerOptions = {
@@ -136,4 +92,20 @@
       const elements = document.querySelectorAll(".scroll-animasi");
         elements.forEach((el) => observer.observe(el));
       });
-    
+      
+// MODAL ULASAN FRONTEND
+function bukaModalUlasan() {
+  const modal = document.getElementById('modalUlasan');
+  if(modal) modal.classList.add('show');
+}
+function tutupModalUlasan() {
+  const modal = document.getElementById('modalUlasan');
+  if(modal) modal.classList.remove('show');
+}
+// Tutup jika klik di luar modal
+window.addEventListener('click', function(e) {
+  const modal = document.getElementById('modalUlasan');
+  if(e.target === modal) {
+    tutupModalUlasan();
+  }
+});

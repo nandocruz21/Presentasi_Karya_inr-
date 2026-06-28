@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 session_start();
 include '../config/koneksi.php';
 
@@ -85,6 +85,10 @@ $result_aktifitas = mysqli_query($koneksi, $query_aktifitas);
           <i class="fa-regular fa-calendar-check"></i>
           <span>Jadwal &amp; Lokasi</span>
         </a>
+        <a href="input_testimoni.php" class="ini-nav">
+          <i class="fa-solid fa-comments"></i>
+          <span>Testimoni</span>
+        </a>
       </div>
 
       <div class="sidebar-footer">
@@ -100,10 +104,17 @@ $result_aktifitas = mysqli_query($koneksi, $query_aktifitas);
       </div>
     </aside>
 
-    <main class="main-content">
-      <button class="btn-hamburger" onclick="toggleSidebar()">
-    <i class="fa-solid fa-bars"></i>
-       </button>
+        <main class="main-content">
+        <!-- MOBILE HEADER -->
+        <div class="mobile-header">
+            <button class="btn-hamburger" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="mobile-logo">
+                <img src="../public/img/logo.png" alt="Logo">
+                <span>MSANTRI</span>
+            </div>
+        </div>
       <div class="header-content">
         <h1>Ikhtisar TPQ</h1>
         <p>Ringkasan cepat data operasional Miftahul Jannah hari ini.</p>
@@ -189,3 +200,5 @@ document.addEventListener('click', function(event) {
     </script>
   </body>
 </html>
+
+
